@@ -3,7 +3,6 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 
 import { ApiService } from './services/api/api.service';
-import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -19,22 +18,13 @@ export class AppComponent {
   // Local stuff
   title = 'campus-nav-front';
 
-  ngOnInit() {
-    console.log('ngOnInit');
+  ngOnInit() { }
+
+  getFromApi() {
+    this.apiService.apiGetRequest();
   }
 
-  pingApi() {
-    console.log('ping');
-
-    this.apiService.messageApi()
-      .pipe(
-        catchError((error) => {
-          console.log(error)
-          throw error;
-        })
-      )
-      .subscribe((response) => {
-        console.log(response);
-      });
+  postToApi() {
+    this.apiService.apiPostRequest();
   }
 }
