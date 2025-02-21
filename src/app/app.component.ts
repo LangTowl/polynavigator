@@ -10,8 +10,5 @@ import { RouterOutlet } from '@angular/router';
 })
 export class AppComponent {
 
-  // Local stuff
-  title = 'campus-nav-front';
-
   ngOnInit() { }
 }
