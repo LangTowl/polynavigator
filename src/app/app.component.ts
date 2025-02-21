@@ -9,6 +9,8 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.component.scss'
 })
 export class AppComponent {
+  // To silence errors in test script
+  title: string = 'campus-nav-front';
 
   ngOnInit() { }
 }
