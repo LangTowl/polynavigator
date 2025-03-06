@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "campus-nav-front": {
+    "polynavigator": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/campus-nav-front",
+            "outputPath": "dist/polynavigator",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -64,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "campus-nav-front:build:production"
+              "buildTarget": "polynavigator:build:production"
             },
             "development": {
-              "buildTarget": "campus-nav-front:build:development"
+              "buildTarget": "polynavigator:build:development"
             }
           },
           "defaultConfiguration": "development"
