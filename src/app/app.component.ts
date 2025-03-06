@@ -18,8 +18,6 @@ export class AppComponent {
   apiService = inject(ApiService);
 
   onTestPress() {
-    console.log('test');
-
     this.apiService.apiGetRequest();
   }
 }
