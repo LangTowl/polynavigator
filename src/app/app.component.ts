@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, inject} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import {ApiService} from './services/api/api.service';
 
 @Component({
   selector: 'app-root',
@@ -13,4 +14,12 @@ export class AppComponent {
   title: string = 'campus-nav-front';
 
   ngOnInit() { }
+
+  apiService = inject(ApiService);
+
+  onTestPress() {
+    console.log('test');
+
+    this.apiService.apiGetRequest();
+  }
 }
