@@ -9,7 +9,7 @@ export class ApiService {
   http = inject(HttpClient);
 
   // Local vars
-  private url = 'https://c13c-146-148-102-151.ngrok-free.app';
+  private url = 'https://8693-146-148-102-151.ngrok-free.app';
 
   constructor() { }
 
