@@ -18,6 +18,14 @@ export class AppComponent {
   apiService = inject(ApiService);
 
   onTestPress() {
-    this.apiService.apiGetRequest();
+    console.log("Button Pressed.");
+    this.apiService.apiGetRequest().subscribe({
+      next: (response) => {
+        console.log(response.response);
+      },
+      error: (err) => {
+        console.error('Error fetching message:', err);
+      }
+    });
   }
 }

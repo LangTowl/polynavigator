@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +10,19 @@ export class ApiService {
   http = inject(HttpClient);
 
   // Local vars
-  private url = 'https://8693-146-148-102-151.ngrok-free.app';
+  private url = 'https://6f58-35-193-123-40.ngrok-free.app';
 
   constructor() { }
 
-  apiGetRequest() {
-    this.http.get(this.url)
-      .subscribe((message) => {
-          console.log(message);
-      });
+  apiGetRequest(): Observable<any> {
+    const headers = new HttpHeaders({
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'ngrok-skip-browser-warning': 'true'
+    });
+
+    return this.http.get<any>(this.url, {
+      headers: headers
+    });
   }
 }
