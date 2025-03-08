@@ -10,7 +10,17 @@ export interface NetworkUser {
   fname: string;
   lname: string;
   username: string;
+}
+
+export interface AuthenticatedUser {
+  user: NetworkUser;
   token: string;
+}
+
+export interface SignInResponse {
+  ok: boolean;
+  message: string;
+  user?: AuthenticatedUser;
 }
 
 @Injectable({
@@ -36,11 +46,16 @@ export class LoginServiceService {
     }
 
     this.apiService.apiPostRequest(endpoint, payload).subscribe({
-      next: (response) => {
-        console.log(response);
+      next: (response: SignInResponse) => {
+        if (response.ok) {
+          console.log("Good sign in");
+          console.log(response.user?.token);
+        } else {
+          console.log("Bad sign in");
+        }
       },
       error: (error) => {
-        console.log(error);
+        console.log("Error encountered in signInRequest: " + error);
       }
     });
   }
