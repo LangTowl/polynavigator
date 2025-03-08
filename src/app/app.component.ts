@@ -1,6 +1,5 @@
 import {Component, inject} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import {ApiService} from './services/api/api.service';
 import {LoginServiceService} from './services/login/login-service.service';
 
 @Component({

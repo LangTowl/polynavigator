@@ -7,6 +7,11 @@ import {DesktopLoginPageComponent} from './views/desktop-login-page/desktop-logi
 export const routes: Routes = [
   {
     path: '',
+    redirectTo: '/login',
+    pathMatch: 'full'
+  },
+  {
+    path: 'login',
     component: getPlatform() === 'mobile' ? MobileLoginPageComponent : DesktopLoginPageComponent,
   }
 ];
