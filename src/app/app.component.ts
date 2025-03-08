@@ -1,6 +1,7 @@
 import {Component, inject} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {ApiService} from './services/api/api.service';
+import {LoginServiceService} from './services/login/login-service.service';
 
 @Component({
   selector: 'app-root',
@@ -15,17 +16,12 @@ export class AppComponent {
 
   ngOnInit() { }
 
-  apiService = inject(ApiService);
+  loginService = inject(LoginServiceService);
 
-  onTestPress() {
-    console.log("Button Pressed.");
-    this.apiService.apiGetRequest().subscribe({
-      next: (response) => {
-        console.log(response.response);
-      },
-      error: (err) => {
-        console.error('Error fetching message:', err);
-      }
-    });
+  post() {
+    console.log("POSTING...");
+
+    this.loginService.signInRequest("username", "password");
   }
+
 }
