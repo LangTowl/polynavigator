@@ -1,5 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import {ApiService} from '../api/api.service';
+import {TokenHandlerService} from '../token-handler/token-handler.service';
 
 export interface SignInMessage {
   username: string;
@@ -27,8 +28,9 @@ export interface SignInResponse {
   providedIn: 'root'
 })
 export class LoginServiceService {
-  // Inject apiService
+  // Inject services
   apiService = inject(ApiService);
+  tokenHandler = inject(TokenHandlerService);
 
   constructor() { }
 
@@ -48,8 +50,9 @@ export class LoginServiceService {
     this.apiService.apiPostRequest(endpoint, payload).subscribe({
       next: (response: SignInResponse) => {
         if (response.ok) {
-          console.log("Good sign in");
-          console.log(response.user?.token);
+          console.log("Server response to sign in request: good");
+
+          this.tokenHandler.updateToken(response.user!.token);
         } else {
           console.log("Bad sign in");
         }
