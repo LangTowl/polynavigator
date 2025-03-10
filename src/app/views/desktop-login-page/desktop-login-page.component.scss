@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:host {
+    --font-family: 'Noto Sans', sans-serif;
+    --MainPolyPurple: #501d83;
+    --MainPolyGrey: #A7B4C3;
+    --MainPolyDarkGrey: #586066;
+    --MainPolyCyberBlue: #009FDF;
+}
+
+html {
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--MainPolyGrey);
+}
+body{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.titleText {
+  font-family: var(--font-family);
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.loginInput {
+  width: 200px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid var(--MainPolyGrey);
+  border-radius: 20px;
+  outline: none;
+}
+
+.loginInput:focus {
+  border-color: #e74c3c;
+}
+
+.mid{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-family);
+  border-radius: 20px;
+  background-color:white;
+  width: 75vh;
+  height: 40vh;
+  color: white;
+  text-align: center;
+}
+
+.leftLogin{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(-135deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
+  width:50%;
+  height: 100%;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+.rightLogin{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color:whitesmoke;
+  color: black;
+  width:50%;
+  height: 100%;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+
+}
