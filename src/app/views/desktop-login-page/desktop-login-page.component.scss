@@ -38,8 +38,9 @@ body{
   letter-spacing: 2px;
 }
 .loginInput {
-  width: 200px;
-  padding: 10px;
+  justify-self: center;
+  width: 75%;
+  padding: 1vh;
   font-size: 16px;
   border: 2px solid var(--MainPolyGrey);
   border-radius: 20px;
@@ -47,7 +48,18 @@ body{
 }
 
 .loginInput:focus {
-  border-color: #e74c3c;
+  border-color: var(--MainPolyPurple);
+}
+
+.loginButton{
+  width: 200px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid var(--MainPolyGrey);
+  border-radius: 20px;
+  outline: none;
+  color: white;
+  background: linear-gradient(-90deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
 }
 
 .mid{
@@ -67,7 +79,7 @@ body{
 .leftLogin{
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   background: linear-gradient(-135deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
   width:50%;
@@ -78,7 +90,7 @@ body{
 .rightLogin{
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   background-color:whitesmoke;
   color: black;
@@ -86,5 +98,18 @@ body{
   height: 100%;
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
+  margin: auto;
 
+}
+
+.registerButton{
+  justify-self: center;
+  width: 200px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid var(--MainPolyGrey);
+  border-radius: 20px;
+  outline: none;
+  color: white;
+  background: transparent;
 }
