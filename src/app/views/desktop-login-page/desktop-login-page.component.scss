@@ -12,6 +12,7 @@
     --MainPolyGrey: #A7B4C3;
     --MainPolyDarkGrey: #586066;
     --MainPolyCyberBlue: #009FDF;
+    --BorderRadius: 20px;
 }
 
 html {
@@ -30,21 +31,50 @@ body{
 
 .titleText {
   font-family: var(--font-family);
-  font-size: 2.5rem;
+  font-size: 4vw;
   font-weight: bold;
   text-align: center;
   color: white;
   text-transform: uppercase;
   letter-spacing: 2px;
+
+  position: absolute;
+  justify-content: center;
+
+  /* verticle centering */
+  left: 50%;
+  transform: translateX(-50%);
+}
+.subTextRegister{
+  font-family: var(--font-family);
+  font-size: 1.2vw;
+  text-align: center;
+  color: white;
+  position: absolute;
+  justify-content: center;
+
+  bottom: 25%;
+  /* verticle centering */
+  left: 50%;
+  transform: translateX(-50%);
+
+
 }
 .loginInput {
+  position: absolute;
+  justify-content: center;
+
+  /* verticle centering */
+  left: 50%;
+  transform: translateX(-50%);
+
   justify-self: center;
   width: 75%;
-  padding: 1vh;
+  padding: 2%;
   font-size: 16px;
   border: 2px solid var(--MainPolyGrey);
-  border-radius: 20px;
-  outline: none;
+  border-radius: var(--BorderRadius);
+  outline: white;
   background-color: lightgray;
 }
 
@@ -53,11 +83,19 @@ body{
 }
 
 .loginButton{
-  width: 200px;
-  padding: 10px;
-  font-size: 16px;
+  position: absolute;
+  justify-content: center;
+
+  bottom: 10%;
+  /* verticle centering */
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 75%;
+  padding: 2%;
+  font-size: 1vw;
   border: 2px solid var(--MainPolyGrey);
-  border-radius: 20px;
+  border-radius: var(--BorderRadius);
   outline: none;
   color: white;
   background: linear-gradient(-90deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
@@ -69,47 +107,56 @@ body{
   justify-content: center;
   align-items: center;
   font-family: var(--font-family);
-  border-radius: 20px;
+  border-radius: var(--BorderRadius);
   background-color:white;
-  width: 75vh;
-  height: 40vh;
+  width: 65vw;
+  height: 45vh;
   color: white;
   text-align: center;
 }
 
 .leftLogin{
-  display: flex;
+  /*display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  align-items: center;
+  align-items: center;*/
+  position: relative;
   background: linear-gradient(-135deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
   width:50%;
   height: 100%;
-  border-top-left-radius: 20px;
-  border-bottom-left-radius: 20px;
+  border-top-left-radius: var(--BorderRadius);
+  border-bottom-left-radius: var(--BorderRadius)
 }
 .rightLogin{
-  display: flex;
+  /*display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: right;
   align-items: center;
+  */
+  position: relative;
   background-color:whitesmoke;
   color: black;
   width:50%;
   height: 100%;
-  border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-top-right-radius: var(--BorderRadius);
+  border-bottom-right-radius: var(--BorderRadius);
   margin: auto;
-
 }
 
 .registerButton{
-  justify-self: center;
-  width: 200px;
-  padding: 10px;
-  font-size: 16px;
+  position: absolute;
+  justify-content: center;
+
+  /* verticle centering */
+  left: 50%;
+  transform: translateX(-50%);
+
+  bottom: 10%;
+  width: 75%;
+  padding: 2%;
+  font-size: 1vw;
   border: 2px solid var(--MainPolyGrey);
-  border-radius: 20px;
+  border-radius: var(--BorderRadius);
   outline: none;
   color: white;
   background: transparent;
