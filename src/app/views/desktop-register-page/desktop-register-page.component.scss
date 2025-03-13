@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:host {
+  --font-family: 'Noto Sans', sans-serif;
+  --MainPolyPurple: #501d83;
+  --MainPolyGrey: #A7B4C3;
+  --MainPolyDarkGrey: #586066;
+  --MainPolyCyberBlue: #009FDF;
+  --BorderRadius: 20px;
+}
+
+html {
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--MainPolyGrey);
+}
+body{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.titleText {
+  font-family: var(--font-family);
+  font-size: 4vw;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+
+  position: absolute;
+  justify-content: center;
+
+  /* verticle centering */
+  left: 50%;
+  transform: translateX(-50%);
+}
+.subTextRegister{
+  font-family: var(--font-family);
+  font-size: 1.2vw;
+  text-align: center;
+  color: white;
+  position: absolute;
+  justify-content: center;
+
+  bottom: 25%;
+  /* verticle centering */
+  left: 50%;
+  transform: translateX(-50%);
+
+
+}
+.loginInput {
+  position: absolute;
+  justify-content: center;
+
+  /* verticle centering */
+  left: 50%;
+  transform: translateX(-50%);
+
+  justify-self: center;
+  width: 75%;
+  padding: 2%;
+  font-size: 16px;
+  border: 2px solid var(--MainPolyGrey);
+  border-radius: var(--BorderRadius);
+  outline: white;
+  background-color: lightgray;
+}
+
+.loginInput:focus {
+  border-color: var(--MainPolyPurple);
+}
+
+.loginButton{
+  position: absolute;
+  justify-content: center;
+
+  bottom: 10%;
+  /* verticle centering */
+  left: 50%;
+  transform: translateX(-50%);
+
+  width: 75%;
+  padding: 2%;
+  font-size: 1vw;
+  border: 2px solid var(--MainPolyGrey);
+  border-radius: var(--BorderRadius);
+  outline: none;
+  color: white;
+  background: linear-gradient(-90deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
+}
+
+.mid{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  font-family: var(--font-family);
+  border-radius: var(--BorderRadius);
+  background-color:white;
+  width: 65vw;
+  height: 45vh;
+  color: white;
+  text-align: center;
+}
+
+.rightSignup{
+  /*display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;*/
+  position: relative;
+  background: linear-gradient(-135deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
+  width:50%;
+  height: 100%;
+  border-top-left-radius: var(--BorderRadius);
+  border-bottom-left-radius: var(--BorderRadius)
+}
+.leftSignup{
+  /*display: flex;
+  flex-direction: column;
+  justify-content: right;
+  align-items: center;
+  */
+  position: relative;
+  background-color:whitesmoke;
+  color: black;
+  width:50%;
+  height: 100%;
+  border-top-right-radius: var(--BorderRadius);
+  border-bottom-right-radius: var(--BorderRadius);
+  margin: auto;
+}
+
+.registerButton{
+  position: absolute;
+  justify-content: center;
+
+  /* verticle centering */
+  left: 50%;
+  transform: translateX(-50%);
+
+  bottom: 10%;
+  width: 75%;
+  padding: 2%;
+  font-size: 1vw;
+  border: 2px solid var(--MainPolyGrey);
+  border-radius: var(--BorderRadius);
+  outline: none;
+  color: white;
+  background: transparent;
+}
