@@ -2,12 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import {ApiService} from '../api/api.service';
 import {TokenHandlerService} from '../token-handler/token-handler.service';
-import {SignInMessage, SignInResponse} from '../interfaces/network-interfaces';
+import {NetworkUser, SignInResponse} from '../interfaces/network-interfaces';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class LoginServiceService {
+export class AccountCreatorService {
   // Inject services
   apiService = inject(ApiService);
   tokenHandler = inject(TokenHandlerService);
@@ -15,15 +16,9 @@ export class LoginServiceService {
 
   constructor() { }
 
-  /**
-   * Sign user into server
-   * @param username -> string
-   * @param password -> string
-   * @param endpoint -> string
-   */
-  signInRequest(username: string, password: string, endpoint = "/login") {
-    // Construct payload
-    const payload: SignInMessage = {
+  createAccountRequest(username: string, password: string, endpoint = "/create-account") {
+   // Construct payload
+    const payload: NetworkUser = {
       username: username,
       password: password
     }
@@ -31,18 +26,18 @@ export class LoginServiceService {
     this.apiService.apiPostRequest(endpoint, payload).subscribe({
       next: (response: SignInResponse) => {
         if (response.ok) {
-          console.log("Server response to sign in request: good");
+          console.log("Server response to account creation request: good");
 
           this.tokenHandler.updateToken(response.user!.token);
 
           this.router.navigate(["/map"]);
         } else {
-          console.log("Request to login denied: " + response.message);
+          console.log("Request to create new user denied: " + response.message)
         }
       },
       error: (error) => {
-        console.log("Error encountered in signInRequest: " + error);
+        console.log("Error encountered in createAccountRequest: " + error);
       }
-    });
+    })
   }
 }
