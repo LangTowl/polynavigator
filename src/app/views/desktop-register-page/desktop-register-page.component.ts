@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-desktop-register-page',
@@ -7,5 +8,10 @@ import { Component } from '@angular/core';
   styleUrl: './desktop-register-page.component.scss'
 })
 export class DesktopRegisterPageComponent {
-
+  //make a Router object to do the routing
+  constructor(private router: Router) {}
+  //nav back to login
+  goToLogin() {
+    this.router.navigate(['/login']);
+  }
 }

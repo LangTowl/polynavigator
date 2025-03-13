@@ -124,8 +124,9 @@ body{
   background: linear-gradient(-135deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
   width:50%;
   height: 100%;
-  border-top-left-radius: var(--BorderRadius);
-  border-bottom-left-radius: var(--BorderRadius)
+  border-top-right-radius: var(--BorderRadius);
+  border-bottom-right-radius: var(--BorderRadius);
+
 }
 .leftSignup{
   /*display: flex;
@@ -138,8 +139,9 @@ body{
   color: black;
   width:50%;
   height: 100%;
-  border-top-right-radius: var(--BorderRadius);
-  border-bottom-right-radius: var(--BorderRadius);
+  border-top-left-radius: var(--BorderRadius);
+  border-bottom-left-radius: var(--BorderRadius);
+
   margin: auto;
 }
 
