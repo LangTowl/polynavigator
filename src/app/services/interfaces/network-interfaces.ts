@@ -18,3 +18,8 @@ export interface SignInResponse {
   message: string;
   user?: AuthenticatedUser;
 }
+
+export interface Geolocation {
+  latitude: number;
+  longitude: number;
+}

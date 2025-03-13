@@ -1,5 +1,6 @@
 import {Component, inject} from '@angular/core';
-import {LoginServiceService} from '../../services/login/login-service.service';
+import {GeolocatorService} from '../../services/geolocator/geolocator.service';
+// import {LoginServiceService} from '../../services/login/login-service.service';
 
 @Component({
   selector: 'app-mobile-login-page',
@@ -9,9 +10,15 @@ import {LoginServiceService} from '../../services/login/login-service.service';
 })
 export class MobileLoginPageComponent {
 
-  private loginService = inject(LoginServiceService)
+  // private loginService = inject(LoginServiceService)
+  private geolocoation = inject(GeolocatorService);
 
-  login() {
-    this.loginService.signInRequest("username", "password");
+  async fetchGPSLocation() {
+    try {
+      const position = await this.geolocoation.fetchGPSLocation();
+      console.log(position);
+    } catch (error) {
+      console.log("Error: " + error);
+    }
   }
 }
