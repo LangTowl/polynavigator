@@ -1,0 +1,128 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@supports(padding:max(0px)) {
+  body, header, footer {
+    padding-left: min(0vmin, env(safe-area-inset-left));
+    padding-right: min(0vmin, env(safe-area-inset-right));
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:host {
+  --font-family: 'Noto Sans', sans-serif;
+  --MainPolyPurple: #501d83;
+  --MainPolyGrey: #A7B4C3;
+  --MainPolyDarkGrey: #586066;
+  --MainPolyCyberBlue: #009FDF;
+  --BorderRadius: 20px;
+}
+
+html {
+  height: 100vh;
+  width: 100vw;
+  background-color: var(--MainPolyGrey);
+}
+body{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.titleText {
+  font-family: var(--font-family);
+  font-size: 15vw;
+  font-weight: bold;
+  text-align: center;
+
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.subTextRegister{
+  font-family: var(--font-family);
+  font-size: 1.2vw;
+  text-align: center;
+  color: white;
+  position: absolute;
+  justify-content: center;
+
+  /* verticle centering */
+  left: 50%;
+  transform: translateX(-50%);
+
+
+}
+
+.mid{
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-family);
+  background-color:white;
+  width: 100vw;
+  height: 100vh;
+  color: white;
+  text-align: center;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+.top{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(-135deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
+  width:100%;
+  height: 20%;
+
+}
+.bottom{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 65%;
+
+}
+.registerButton{
+  width: 85%;
+  padding: 2%;
+  font-size: 5vw;
+  border: 2px solid var(--MainPolyGrey);
+  border-radius: var(--BorderRadius);
+  outline: none;
+  color: black;
+  background: transparent;
+}
+
+.loginInput {
+  justify-content: center;
+  width: 85%;
+  padding: 3%;
+  font-size: 5vw;
+  border: 2px solid var(--MainPolyGrey);
+  border-radius: var(--BorderRadius);
+  outline: none;
+  background-color: lightgray;
+  margin-bottom: 5%;
+}
+
+.loginButton {
+  width: 75%;
+  padding: 3%;
+  font-size: 5vw;
+  border: 2px solid var(--MainPolyGrey);
+  border-radius: var(--BorderRadius);
+  outline: none;
+  color: white;
+  background: linear-gradient(-90deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
+}
