@@ -125,7 +125,8 @@ body{
   width:50%;
   height: 100%;
   border-top-left-radius: var(--BorderRadius);
-  border-bottom-left-radius: var(--BorderRadius)
+  border-bottom-left-radius: var(--BorderRadius);
+  transition: transform 0.5s ease-in-out;
 }
 .rightLogin{
   /*display: flex;
