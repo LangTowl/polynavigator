@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang = "en">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta charset="UTF-8">
+  <title>Login</title>
+</head>
+
+<body>
+<div class = "mid">
+  <div class = "top">
+    welcome to<br>
+    <div class="titleText">PolyNav</div>
+  </div>
+
+  <div class = "bottom">
+
+    <div class="titleText" style="color: black; font-size: 10vw;">Register</div>
+
+    <div style="gap: 5vh;">
+
+      <input class="loginInput" type="text" placeholder="username">
+
+      <input class="loginInput" type="password" placeholder="password">
+
+      <input class="loginInput" type="password" placeholder="confirm password">
+
+      <input class = "loginInput" name="captcha" id="captcha" placeholder="Capatcha Place holder">
+
+    </div>
+
+    <button class="loginButton">Register</button>
+
+    <div>
+      <span style="color: black;">have an account?</span>
+      <button class="registerButton" (click)="goToRegister()">Sign In</button>
+    </div>
+
+  </div>
+
+</div>
+</body>
+</html>

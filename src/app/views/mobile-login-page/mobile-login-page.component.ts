@@ -1,6 +1,5 @@
-import {Component, inject} from '@angular/core';
-import {GeolocatorService} from '../../services/geolocator/geolocator.service';
-// import {LoginServiceService} from '../../services/login/login-service.service';
+import { Component } from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-mobile-login-page',
@@ -9,16 +8,10 @@ import {GeolocatorService} from '../../services/geolocator/geolocator.service';
   styleUrl: './mobile-login-page.component.scss'
 })
 export class MobileLoginPageComponent {
+  //make a Router object to do the routing
+  constructor(private router: Router) {}
 
-  // private loginService = inject(LoginServiceService)
-  private geolocoation = inject(GeolocatorService);
-
-  async fetchGPSLocation() {
-    try {
-      const position = await this.geolocoation.fetchGPSLocation();
-      console.log(position);
-    } catch (error) {
-      console.log("Error: " + error);
-    }
+  goToRegister() {
+    this.router.navigate(['/register']);
   }
 }

@@ -7,12 +7,12 @@
 }
 
 :host {
-    --font-family: 'Noto Sans', sans-serif;
-    --MainPolyPurple: #501d83;
-    --MainPolyGrey: #A7B4C3;
-    --MainPolyDarkGrey: #586066;
-    --MainPolyCyberBlue: #009FDF;
-    --BorderRadius: 20px;
+  --font-family: 'Noto Sans', sans-serif;
+  --MainPolyPurple: #501d83;
+  --MainPolyGrey: #A7B4C3;
+  --MainPolyDarkGrey: #586066;
+  --MainPolyCyberBlue: #009FDF;
+  --BorderRadius: 20px;
 }
 
 html {
@@ -60,6 +60,7 @@ body{
 
 
 }
+
 .loginInput {
   position: absolute;
   justify-content: center;
@@ -115,7 +116,7 @@ body{
   text-align: center;
 }
 
-.leftLogin{
+.rightSignup{
   /*display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -124,11 +125,11 @@ body{
   background: linear-gradient(-135deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
   width:50%;
   height: 100%;
-  border-top-left-radius: var(--BorderRadius);
-  border-bottom-left-radius: var(--BorderRadius);
-  transition: transform 0.5s ease-in-out;
+  border-top-right-radius: var(--BorderRadius);
+  border-bottom-right-radius: var(--BorderRadius);
+
 }
-.rightLogin{
+.leftSignup{
   /*display: flex;
   flex-direction: column;
   justify-content: right;
@@ -139,8 +140,9 @@ body{
   color: black;
   width:50%;
   height: 100%;
-  border-top-right-radius: var(--BorderRadius);
-  border-bottom-right-radius: var(--BorderRadius);
+  border-top-left-radius: var(--BorderRadius);
+  border-bottom-left-radius: var(--BorderRadius);
+
   margin: auto;
 }
 

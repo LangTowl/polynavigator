@@ -10,7 +10,7 @@ describe('DesktopMapPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [DesktopMapPageComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(DesktopMapPageComponent);
     component = fixture.componentInstance;

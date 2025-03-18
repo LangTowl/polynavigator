@@ -10,7 +10,7 @@ describe('MobileMapPageComponent', () => {
     await TestBed.configureTestingModule({
       imports: [MobileMapPageComponent]
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(MobileMapPageComponent);
     component = fixture.componentInstance;
