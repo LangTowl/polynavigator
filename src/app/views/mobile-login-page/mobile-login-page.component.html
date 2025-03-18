@@ -19,12 +19,12 @@
       <div class="titleText" style="color: black; font-size: 10vw;">Sign In</div>
 
       <div style="gap: 5vh;">
-        <input class="loginInput" type="text" placeholder="username">
+        <input class="loginInput" type="text" placeholder="username" [(ngModel)]="username">
 
-        <input class="loginInput" type="password" placeholder="password">
+        <input class="loginInput" type="password" placeholder="password" [(ngModel)]="password">
       </div>
 
-      <button class="loginButton">Sign In</button>
+      <button class="loginButton" (click)="attemptLogin()">Sign In</button>
 
       <div>
 

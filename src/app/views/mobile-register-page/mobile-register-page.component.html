@@ -20,17 +20,17 @@
 
     <div style="gap: 5vh;">
 
-      <input class="loginInput" type="text" placeholder="username">
+      <input class="loginInput" type="text" placeholder="username" [(ngModel)]="username">
 
-      <input class="loginInput" type="password" placeholder="password">
+      <input class="loginInput" type="password" placeholder="password" [(ngModel)]="password">
 
-      <input class="loginInput" type="password" placeholder="confirm password">
+      <input class="loginInput" type="password" placeholder="confirm password" [(ngModel)]="passwordConfirm">
 
       <input class = "loginInput" name="captcha" id="captcha" placeholder="Capatcha Place holder">
 
     </div>
 
-    <button class="loginButton">Register</button>
+    <button class="loginButton" (click)="attemptRegistration()">Register</button>
 
     <div>
       <span style="color: black;">have an account?</span>

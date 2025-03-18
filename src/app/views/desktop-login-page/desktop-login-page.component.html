@@ -25,11 +25,11 @@
           <div class="titleText" style="color: black; font-size: 2vw; bottom: 65%;">Sign In</div>
           <div>
             <!-- <span> username <br> </span> -->
-            <input class="loginInput" type="text" placeholder="username" style="bottom: 50%">
+            <input class="loginInput" type="text" placeholder="username" style="bottom: 50%" [(ngModel)]="username">
             <!-- <span> password <br> </span> -->
-            <input class="loginInput" type="password" placeholder="password" style="bottom: 35%">
+            <input class="loginInput" type="password" placeholder="password" style="bottom: 35%" [(ngModel)]="password">
           </div>
-          <button class="loginButton">Sign In</button>
+          <button class="loginButton" (click)="attemptLogin()">Sign In</button>
         </div>
 
       </div>

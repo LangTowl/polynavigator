@@ -8,12 +8,12 @@
       <div class="titleText" style="color: black; font-size: 2vw; bottom: 85%;">Register</div>
       <div>
         <!-- <span> username <br> </span> -->
-        <input class="loginInput" type="text" placeholder="username" style="bottom: 70%">
+        <input class="loginInput" type="text" placeholder="username" style="bottom: 70%" [(ngModel)]="username">
         <!-- <span> password <br> </span> -->
-        <input class="loginInput" type="password" placeholder="password" style="bottom: 55%">
-        <input class="loginInput" type="password" placeholder="confirm password" style="bottom: 40%">
+        <input class="loginInput" type="password" placeholder="password" style="bottom: 55%" [(ngModel)]="password">
+        <input class="loginInput" type="password" placeholder="confirm password" style="bottom: 40%" [(ngModel)]="passwordConfirm">
       </div>
-      <button class="loginButton">Register</button>
+      <button class="loginButton" (click)="attemptRegistration()">Register</button>
     </div>
 
     <div class = "rightSignup">
