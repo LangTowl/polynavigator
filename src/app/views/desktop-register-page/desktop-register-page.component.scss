@@ -73,7 +73,7 @@ body{
   width: 75%;
   padding: 2%;
   font-size: 16px;
-  border: 2px solid var(--MainPolyGrey);
+  border: 2px solid transparent;
   border-radius: var(--BorderRadius);
   outline: white;
   background-color: lightgray;
@@ -95,7 +95,7 @@ body{
   width: 75%;
   padding: 2%;
   font-size: 1vw;
-  border: 2px solid var(--MainPolyGrey);
+  border: 2px solid whitesmoke;
   border-radius: var(--BorderRadius);
   outline: none;
   color: white;
@@ -158,7 +158,7 @@ body{
   width: 75%;
   padding: 2%;
   font-size: 1vw;
-  border: 2px solid var(--MainPolyGrey);
+  border: 2px solid white;
   border-radius: var(--BorderRadius);
   outline: none;
   color: white;

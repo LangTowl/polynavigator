@@ -109,7 +109,7 @@ body{
   width: 85%;
   padding: 3%;
   font-size: 5vw;
-  border: 2px solid var(--MainPolyGrey);
+  border: 2px solid transparent;
   border-radius: var(--BorderRadius);
   outline: none;
   background-color: lightgray;
@@ -120,7 +120,7 @@ body{
   width: 75%;
   padding: 3%;
   font-size: 5vw;
-  border: 2px solid var(--MainPolyGrey);
+  border: 2px solid whitesmoke;
   border-radius: var(--BorderRadius);
   outline: none;
   color: white;
