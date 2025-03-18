@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MobileLoginPageComponent } from './mobile-login-page.component';
 
-describe('MobileManagerComponent', () => {
+describe('MobileLoginPageComponent', () => {
   let component: MobileLoginPageComponent;
   let fixture: ComponentFixture<MobileLoginPageComponent>;
 

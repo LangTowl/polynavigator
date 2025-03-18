@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DesktopLoginPageComponent } from './desktop-login-page.component';
 
-describe('DesktopManagerComponent', () => {
+describe('DesktopLoginPageComponent', () => {
   let component: DesktopLoginPageComponent;
   let fixture: ComponentFixture<DesktopLoginPageComponent>;
 
