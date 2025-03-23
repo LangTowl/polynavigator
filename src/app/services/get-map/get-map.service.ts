@@ -13,8 +13,18 @@ export class GetMapService {
 
   constructor() { }
 
+  /**
+   * Sends get request to server to get map nodes
+   * @param endpoint -> target endpoint on server
+   */
   requestMapNodes(endpoint: string = "/map-nodes") {
-    console.log("Service debug.");
+    // Check to see if nodes are already in storage
+    if (localStorage.getItem('map-nodes') === null) {
+      console.log("Nodes not found in cash. Requesting them from server...");
+    } else {
+      console.log("Nodes found in cash. No request sent.");
+      return;
+    }
 
     // Collect user token
     let token = this.tokenHandler.fetchToken() ?? "";
@@ -22,6 +32,11 @@ export class GetMapService {
     this.apiService.apiGetRequest<MapRequestResponse>(endpoint, [["token", token]]).subscribe({
       next: (response: MapRequestResponse) => {
         console.log(response);
+
+        // If response exists, store in local storage
+        if (response) {
+          localStorage.setItem('map-nodes', JSON.stringify(response));
+        }
       },
       error: (error) => {
         console.error(error);
