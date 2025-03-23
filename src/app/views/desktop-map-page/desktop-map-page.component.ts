@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import {GetMapService} from '../../services/get-map/get-map.service';
 
 @Component({
   selector: 'app-desktop-map-page',
@@ -7,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrl: './desktop-map-page.component.scss'
 })
 export class DesktopMapPageComponent {
+  // Import service
+  getMapService = inject(GetMapService);
 
+  requestMapNodes() {
+    console.log("Component debug.");
+    this.getMapService.requestMapNodes();
+  }
 }

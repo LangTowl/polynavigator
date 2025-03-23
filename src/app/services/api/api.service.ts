@@ -61,18 +61,26 @@ export class ApiService {
   /**
    * Generic api GET request
    * @param endpoint -> specified target endpoint
+   * @param params -> additional headers to be sent with get request
    */
-  apiGetRequest<RESPONSE>(endpoint: string): Observable<RESPONSE> {
+  apiGetRequest<RESPONSE>(endpoint: string, params: [string, string][] | null): Observable<RESPONSE> {
     console.log("Outgoing GET request to " + endpoint + " sent...");
 
     // Establish headers for get request
-    const headers = new HttpHeaders({
+    let headers = new HttpHeaders({
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'ngrok-skip-browser-warning': 'true'
     });
 
-    return this.http.post<RESPONSE>(this.url + endpoint, {headers: headers});
+    // Dynamically append params to headers
+    if (params !== null) {
+      params.forEach(([key, value]) => {
+        headers = headers.append(key, value);
+      });
+    }
+
+    return this.http.get<RESPONSE>(this.url + endpoint, {headers: headers});
   }
 
   /**

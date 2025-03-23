@@ -23,3 +23,16 @@ export interface Geolocation {
   latitude: number;
   longitude: number;
 }
+
+export interface Node {
+  x: number;
+  y: number;
+  name: string
+  group: string;
+  kind: number;
+  tags: string[];
+}
+
+export interface MapRequestResponse {
+  nodes: [number : Node];
+}
