@@ -15,4 +15,9 @@ export class DesktopMapPageComponent {
     console.log("Component debug.");
     this.getMapService.requestMapNodes();
   }
+
+  fetchNodesFromCache() {
+    console.log("Component debug.");
+    this.getMapService.fetchMapFromStorage();
+  }
 }

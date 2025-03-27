@@ -43,4 +43,17 @@ export class GetMapService {
       }
     });
   }
+
+  /**
+   * Returns array of Node objects, empty array if no nodes exists
+   */
+  fetchMapFromStorage(): Node[] {
+    // Check if nodes are loated in storage
+    if (localStorage.getItem('map-nodes') === null) {
+      alert("No nodes found in cache...");
+      return [];
+    } else {
+      return JSON.parse(localStorage.getItem('map-nodes') ?? "[]") as Node[];
+    }
+  }
 }
