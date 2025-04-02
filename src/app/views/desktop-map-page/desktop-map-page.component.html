@@ -1,4 +1,9 @@
+
 <html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>PolyNav</title>
+  </head>
   <body>
 
     <div class = "leftSide">
@@ -18,12 +23,15 @@
       </div>
     </div>
 
-    <div class="rightSide" >
+    <div class="rightSide">
+      <svg #map id="map" width="100%" height="100%" viewBox="0 0 1570 1147">
+        <!-- Background Map Image -->
+        <image href="map-2.svg" width="1570" height="1147"/>
 
-      <svg #map id="map" width="100%" height="100%">
-        <image href="map.svg" width="100%" height="100%" />
+        <path *ngFor="let path of paths" [attr.d]="path.d" stroke="red" stroke-width="3" fill="none"></path>
+
+        <circle *ngFor="let node of nodes"  [attr.cx]="node.x + bufferX"  [attr.cy]="node.y + bufferY"  r="2" fill="blue"></circle>
       </svg>
-
     </div>
 
   </body>
