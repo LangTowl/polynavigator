@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+:host {
+  --font-family: 'Noto Sans', sans-serif;
+  --MainPolyPurple: #501d83;
+  --MainPolyGrey: #A7B4C3;
+  --MainPolyDarkGrey: #586066;
+  --MainPolyCyberBlue: #009FDF;
+  --BorderRadius: 20px;
+
+  display: block;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+body{
+overflow: hidden;
+padding: 0;
+}
+
+
+html, body {
+  margin: 0;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  overflow: hidden;
+  display: flex;
+
+}
+.leftSide{
+  width: 35%;
+  height: 100%;
+  border: 2px solid var(--MainPolyGrey);
+}
+.rightSide{
+  width: 65%;
+  height: 100%;
+  border: 2px solid var(--MainPolyGrey);
+}
+
+.titleBox{
+  background: linear-gradient(-135deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
+
+}
+.titleText {
+  font-family: var(--font-family);
+  font-size: 3vw;
+  font-weight: bold;
+  text-align: center;
+
+  color: white;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.originDestinationBox{
+  display: flex;
+  object-fit: contain;
+  height: 20%;
+  width: 100%;
+  background: var(--mainPolyDarkGrey);
+
+}
+.graphics{
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+}
+.destinationBox{
+  width: 90%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+.desInput {
+  width: 85%;
+  padding: 5%;
+  font-size: 1vw;
+  border: 2px solid transparent;
+  border-radius: var(--BorderRadius);
+  outline: none;
+  background-color: lightgray;
+  margin: 1.9%;
+}
+.destinationInput{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+}
+
