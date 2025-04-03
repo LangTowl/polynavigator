@@ -1,1 +1,37 @@
-<p>desktop-map-page works!</p>
+
+<html lang="en">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>PolyNav</title>
+  </head>
+  <body>
+
+    <div class = "leftSide">
+      <div class = "titleBox">
+        <span class="titleText">Polynav</span>
+      </div>
+      <div class="originDestinationBox">
+        <div class="graphics">
+          <img src="destinationIcon.png" alt="destination icon">
+          <img src="pathIcon.png" alt="path icon">
+          <img src="homeIcon.png" alt="home icon">
+        </div>
+        <div class="destinationInput">
+          <input class="desInput" placeholder="Destination">
+          <input class="desInput" placeholder="Origin">
+        </div>
+      </div>
+    </div>
+
+    <div class="rightSide">
+      <svg #map id="map" width="100%" height="100%" viewBox="0 0 1300 1147">
+        <image href="map-2.svg" width="1300" height="1147"/>
+
+        <path *ngFor="let path of paths" [attr.d]="path.d" stroke="red" stroke-width="3" fill="none"></path>
+
+        <circle *ngFor="let node of nodes"  [attr.cx]="node.x + bufferX"  [attr.cy]="node.y + bufferY"  r="2" fill="blue"></circle>
+      </svg>
+    </div>
+
+  </body>
+</html>
