@@ -1,6 +1,8 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject } from '@angular/core';
 import svgPanZoom from 'svg-pan-zoom';
 import { NgForOf } from '@angular/common';
+import {GetMapService} from '../../services/get-map/get-map.service';
+import {MapRequestResponse} from '../../services/interfaces/network-interfaces';
 
 @Component({
   selector: 'app-desktop-map-page',
@@ -9,6 +11,21 @@ import { NgForOf } from '@angular/common';
   styleUrls: ['./desktop-map-page.component.scss']
 })
 export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
+
+  // Inject services
+  getMapService = inject(GetMapService);
+
+  // Dictionary to store all nodes
+  nodeDictionary: MapRequestResponse = {};
+
+  ngOnInit() {
+    this.nodeDictionary = this.getMapService.fetchMapFromStorage();
+
+    // Example on how to iterate through each key value par in the dictionary
+    Object.entries(this.nodeDictionary).forEach(([key, node]) => {
+      console.log(`Key: ${key}, x: ${node.x} y: ${node.y}`);
+    });
+  }
 
   @ViewChild('map', { static: false }) svgElement!: ElementRef;
   panZoomInstance: any;

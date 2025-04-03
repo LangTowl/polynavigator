@@ -34,5 +34,5 @@ export interface Node {
 }
 
 export interface MapRequestResponse {
-  nodes: { [key : number]: Node };
+  [key : number]: Node;
 }
