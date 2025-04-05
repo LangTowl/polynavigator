@@ -3,6 +3,7 @@ import svgPanZoom from 'svg-pan-zoom';
 import { NgForOf } from '@angular/common';
 import {GetMapService} from '../../services/get-map/get-map.service';
 import {MapRequestResponse} from '../../services/interfaces/network-interfaces';
+import {NodesToTraverseService} from '../../services/nodes-to-traverse/nodes-to-traverse.service';
 
 @Component({
   selector: 'app-desktop-map-page',
@@ -14,6 +15,7 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
 
   // Inject services
   getMapService = inject(GetMapService);
+  nodesToTraverseService = inject(NodesToTraverseService);
 
   // Dictionary to store all nodes
   nodeDictionary: MapRequestResponse = {};
@@ -22,9 +24,9 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
     this.nodeDictionary = this.getMapService.fetchMapFromStorage();
 
     // Example on how to iterate through each key value par in the dictionary
-    Object.entries(this.nodeDictionary).forEach(([key, node]) => {
-      console.log(`Key: ${key}, x: ${node.x} y: ${node.y}`);
-    });
+    // Object.entries(this.nodeDictionary).forEach(([key, node]) => {
+    //   console.log(`Key: ${key}, x: ${node.x} y: ${node.y}`);
+    // });
   }
 
   @ViewChild('map', { static: false }) svgElement!: ElementRef;
@@ -114,4 +116,19 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
       this.panZoomInstance.destroy();
     }
   }
+
+  /**
+   * Use to make API call to pull nodes to traverse into local storage
+   */
+  requestTraversalGraph() {
+    this.nodesToTraverseService.requestTraversalGraph(1, 2);
+  }
+
+  /**
+   * Use to fetch nodes to traverse
+   */
+  fetchNodesToTraverse() {
+    console.log(this.nodesToTraverseService.fetchNodesToTraverse());
+  }
+
 }
