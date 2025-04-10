@@ -2,8 +2,9 @@ import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject } fr
 import svgPanZoom from 'svg-pan-zoom';
 import { NgForOf } from '@angular/common';
 import {GetMapService} from '../../services/get-map/get-map.service';
-import {MapRequestResponse} from '../../services/interfaces/network-interfaces';
+import {Geolocation, MapRequestResponse} from '../../services/interfaces/network-interfaces';
 import {NodesToTraverseService} from '../../services/nodes-to-traverse/nodes-to-traverse.service';
+import {GeolocatorService} from '../../services/geolocator/geolocator.service';
 
 @Component({
   selector: 'app-desktop-map-page',
@@ -16,12 +17,21 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
   // Inject services
   getMapService = inject(GetMapService);
   nodesToTraverseService = inject(NodesToTraverseService);
+  geoLocatorService = inject(GeolocatorService);
 
   // Dictionary to store all nodes
   nodeDictionary: MapRequestResponse = {};
 
   ngOnInit() {
     this.nodeDictionary = this.getMapService.fetchMapFromStorage();
+
+    // Test location API
+    let location = this.geoLocatorService.fetchGPSLocation().then(
+      (location: Geolocation) => {
+        console.log("Lat: " + location.latitude + "\nLong: " + location.longitude);
+        return location;
+      }
+    );
 
     // Example on how to iterate through each key value par in the dictionary
     // Object.entries(this.nodeDictionary).forEach(([key, node]) => {
