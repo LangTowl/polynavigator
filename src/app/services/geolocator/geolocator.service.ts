@@ -30,8 +30,8 @@ export class GeolocatorService {
         navigator.geolocation.getCurrentPosition(
           (position) => {
             resolve({
-              latitude: this.computeRelativeHeight(position.coords.latitude),
-              longitude: this.computeRelativeWidth(position.coords.longitude),
+              latitude: this.computeRelativeLat(position.coords.latitude),
+              longitude: this.computeRelativeLong(position.coords.longitude),
             });
           },
           (error) => {
@@ -48,7 +48,7 @@ export class GeolocatorService {
    * Takes in latitude and returns pixel equivalent
    * @param latitude -> number
    */
-  computeRelativeHeight(latitude: number): number {
+  computeRelativeLat(latitude: number): number {
     // Check if lat is in bounds
     if (Math.abs(this.topBorder) >= Math.abs(latitude) && Math.abs(latitude) >= Math.abs(this.bottomBorder)) {
       // Normalize
@@ -65,7 +65,7 @@ export class GeolocatorService {
    * Takes in longitude and returns pixel equivalent
    * @param longitude -> number
    */
-  computeRelativeWidth(longitude: number): number {
+  computeRelativeLong(longitude: number): number {
     // Check if long is in bounds
     if (Math.abs(this.leftBorder) >= Math.abs(longitude) && Math.abs(longitude) >= Math.abs(this.rightBorder)) {
       // Normalize
