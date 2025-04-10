@@ -1,30 +1,26 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>PolyNav</title>
+  <meta charset="UTF-8" />
+  <title>Polynav Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 </head>
 <body>
 <div class="leftSide">
   <div class="titleBox">
     <span class="titleText">Polynav</span>
   </div>
+
   <div class="originDestinationBox">
     <div class="destinationInput">
       <div class="titleBoxBot">
         <span class="titleTextBot">From</span>
       </div>
-      <!-- Group selection -->
       <select class="selectBox" [(ngModel)]="selectedGroup1">
-        <option *ngFor="let group of groupOptions" [value]="group">
-          {{ group }}
-        </option>
+        <option *ngFor="let group of groupOptions" [value]="group">{{ group }}</option>
       </select>
-
-      <!-- Sub-dropdown showing names under selected group -->
       <select class="selectBox" [(ngModel)]="selectedName1" *ngIf="selectedGroup1">
-        <option *ngFor="let name of groupedNames[selectedGroup1]" [value]="name">
-          {{ name }}
-        </option>
+        <option *ngFor="let name of groupedNames[selectedGroup1]" [value]="name">{{ name }}</option>
       </select>
     </div>
 
@@ -32,24 +28,44 @@
       <div class="titleBoxBot">
         <span class="titleTextBot">To</span>
       </div>
-      <!-- Group selection -->
       <select class="selectBox" [(ngModel)]="selectedGroup2">
-        <option *ngFor="let group of groupOptions" [value]="group">
-          {{ group }}
-        </option>
+        <option *ngFor="let group of groupOptions" [value]="group">{{ group }}</option>
       </select>
-
-      <!-- Sub-dropdown showing names under selected group -->
       <select class="selectBox" [(ngModel)]="selectedName2" *ngIf="selectedGroup2">
-        <option *ngFor="let name of groupedNames[selectedGroup2]" [value]="name">
-          {{ name }}
-        </option>
+        <option *ngFor="let name of groupedNames[selectedGroup2]" [value]="name">{{ name }}</option>
       </select>
     </div>
 
-    <!-- Adding a button to find route -->
     <div class="routeButtonContainer">
       <button class="findRouteButton" (click)="findDirectRoute()">Find Route</button>
+    </div>
+  </div>
+
+  <div class="filterSection">
+    <div class="filterTitle">Filter Nodes</div>
+
+    <div class="tagFilter">
+      <div class="tagFilterTitle">Search by Tag:</div>
+      <input type="text" class="tagInput" [(ngModel)]="tagFilter" (input)="filterByTag()" placeholder="Enter tag to filter" />
+    </div>
+
+    <div *ngFor="let tagGroup of filteredTagGroups" class="filterGroup">
+      <div class="groupHeader" (click)="toggleGroup(tagGroup)">
+        <span>{{ tagGroup }}</span>
+        <span class="expandIcon" [class.rotated]="expandedGroups[tagGroup]">▶</span>
+      </div>
+
+      <div class="groupContent" [style.display]="expandedGroups[tagGroup] ? 'block' : 'none'">
+        <div *ngFor="let nodeName of getNodesByTagGroup(tagGroup)" class="nodeItem" (click)="selectNodeByName(nodeName)">
+          <span>{{ nodeName }}</span>
+          <div class="kindGroup" *ngIf="getNodeKinds(nodeName).length > 0">
+
+            <div class="tagsList">
+              <span *ngFor="let tag of getNodeTags(nodeName)" class="tag" >{{ tag }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -58,22 +74,22 @@
   <svg #map id="map" width="100%" height="100%" viewBox="0 0 1300 1147">
     <image href="map-2.svg" width="1300" height="1147"/>
 
-    <!-- Path rendering -->
     <path *ngFor="let path of paths"
           [attr.d]="path.d"
           stroke="green"
-          stroke-width = "5"></path>
+          stroke-width="5"></path>
 
-    <!--NODES RENDERING -->
     <ng-container *ngFor="let key of nodeKeys">
       <circle
         *ngIf="nodeDictionary[key].kind === 0"
         [attr.cx]="nodeDictionary[key].x + bufferX"
         [attr.cy]="nodeDictionary[key].y + bufferY"
-        [attr.r] = "(selectedName1 === '') ? 4.5 : 8"
-        [attr.fill]="(selectedName1 === '') ? 'purple' :
-                     (nodeDictionary[key].name === selectedName1) ? 'green' :
-                     (nodeDictionary[key].name === selectedName2) ? 'green' : 'transparent'">
+        [attr.r]="(selectedName1 === '' && selectedName2 === '' ) ? 4.5 : 8"
+        [attr.fill]="
+            (selectedName1 === '' && selectedName2 === '') ? 'Grey' :
+            (nodeDictionary[key].name === selectedName1) ? 'green' :
+            (nodeDictionary[key].name === selectedName2) ? 'purple' : 'transparent'
+          ">
       </circle>
     </ng-container>
   </svg>
