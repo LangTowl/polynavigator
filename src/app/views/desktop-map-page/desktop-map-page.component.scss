@@ -41,6 +41,8 @@ html, body {
 
 .titleBox{
   background: linear-gradient(-135deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
+  //border: 4px solid var(--MainPolyCyberBlue);
+  width: 100%;
 
 }
 .titleText {
@@ -53,13 +55,27 @@ html, body {
   text-transform: uppercase;
   letter-spacing: 2px;
 }
+.titleTextBot {
+  font-family: var(--font-family);
+  font-size: 1.5vw;
+  font-weight: bold;
+  text-align: center;
+  color: white;
+  text-transform: uppercase;
+}
+.titleBoxBot{
+  background: linear-gradient(0deg, var(--MainPolyGrey), black);
+  width: 100%;
+  outline: black solid var(--MainPolyGrey);
+}
+
 .originDestinationBox{
   display: flex;
   object-fit: contain;
-  height: 20%;
+  height: 30%;
   width: 100%;
   background: var(--mainPolyDarkGrey);
-
+  flex-direction: column;
 }
 .graphics{
   width: 10%;
@@ -73,21 +89,19 @@ html, body {
   flex-direction: column;
   align-items: center;
 }
-.desInput {
-  width: 85%;
-  padding: 5%;
-  font-size: 1vw;
-  border: 2px solid transparent;
-  border-radius: var(--BorderRadius);
-  outline: none;
-  background-color: lightgray;
-  margin: 1.9%;
+.selectBox {
+  width: 95%;
+  padding: 10%;
+  font-size: 2vw;
+  background-color: var(--mainPolyDarkGrey);
+  margin: 2%;
+  font-family: var(--font-family);
 }
 .destinationInput{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 100%;
 }
 

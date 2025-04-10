@@ -1,37 +1,82 @@
-
 <html lang="en">
-  <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-    <title>PolyNav</title>
-  </head>
-  <body>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>PolyNav</title>
+</head>
+<body>
+<div class="leftSide">
+  <div class="titleBox">
+    <span class="titleText">Polynav</span>
+  </div>
+  <div class="originDestinationBox">
+    <div class="destinationInput">
+      <div class="titleBoxBot">
+        <span class="titleTextBot">From</span>
+      </div>
+      <!-- Group selection -->
+      <select class="selectBox" [(ngModel)]="selectedGroup1">
+        <option *ngFor="let group of groupOptions" [value]="group">
+          {{ group }}
+        </option>
+      </select>
 
-    <div class = "leftSide">
-      <div class = "titleBox">
-        <span class="titleText">Polynav</span>
-      </div>
-      <div class="originDestinationBox">
-        <div class="graphics">
-          <img src="destinationIcon.png" alt="destination icon">
-          <img src="pathIcon.png" alt="path icon">
-          <img src="homeIcon.png" alt="home icon">
-        </div>
-        <div class="destinationInput">
-          <input class="desInput" placeholder="Destination">
-          <input class="desInput" placeholder="Origin">
-        </div>
-      </div>
+      <!-- Sub-dropdown showing names under selected group -->
+      <select class="selectBox" [(ngModel)]="selectedName1" *ngIf="selectedGroup1">
+        <option *ngFor="let name of groupedNames[selectedGroup1]" [value]="name">
+          {{ name }}
+        </option>
+      </select>
     </div>
 
-    <div class="rightSide">
-      <svg #map id="map" width="100%" height="100%" viewBox="0 0 1300 1147">
-        <image href="map-2.svg" width="1300" height="1147"/>
+    <div class="destinationInput">
+      <div class="titleBoxBot">
+        <span class="titleTextBot">To</span>
+      </div>
+      <!-- Group selection -->
+      <select class="selectBox" [(ngModel)]="selectedGroup2">
+        <option *ngFor="let group of groupOptions" [value]="group">
+          {{ group }}
+        </option>
+      </select>
 
-        <path *ngFor="let path of paths" [attr.d]="path.d" stroke="red" stroke-width="3" fill="none"></path>
-
-        <circle *ngFor="let node of nodes"  [attr.cx]="node.x + bufferX"  [attr.cy]="node.y + bufferY"  r="2" fill="blue"></circle>
-      </svg>
+      <!-- Sub-dropdown showing names under selected group -->
+      <select class="selectBox" [(ngModel)]="selectedName2" *ngIf="selectedGroup2">
+        <option *ngFor="let name of groupedNames[selectedGroup2]" [value]="name">
+          {{ name }}
+        </option>
+      </select>
     </div>
 
-  </body>
+    <!-- Adding a button to find route -->
+    <div class="routeButtonContainer">
+      <button class="findRouteButton" (click)="findDirectRoute()">Find Route</button>
+    </div>
+  </div>
+</div>
+
+<div class="rightSide">
+  <svg #map id="map" width="100%" height="100%" viewBox="0 0 1300 1147">
+    <image href="map-2.svg" width="1300" height="1147"/>
+
+    <!-- Path rendering -->
+    <path *ngFor="let path of paths"
+          [attr.d]="path.d"
+          stroke="green"
+          stroke-width = "5"></path>
+
+    <!--NODES RENDERING -->
+    <ng-container *ngFor="let key of nodeKeys">
+      <circle
+        *ngIf="nodeDictionary[key].kind === 0"
+        [attr.cx]="nodeDictionary[key].x + bufferX"
+        [attr.cy]="nodeDictionary[key].y + bufferY"
+        [attr.r] = "(selectedName1 === '') ? 4.5 : 8"
+        [attr.fill]="(selectedName1 === '') ? 'purple' :
+                     (nodeDictionary[key].name === selectedName1) ? 'green' :
+                     (nodeDictionary[key].name === selectedName2) ? 'green' : 'transparent'">
+      </circle>
+    </ng-container>
+  </svg>
+</div>
+</body>
 </html>

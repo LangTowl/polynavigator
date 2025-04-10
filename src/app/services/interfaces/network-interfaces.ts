@@ -36,3 +36,4 @@ export interface Node {
 export interface MapRequestResponse {
   [key : number]: Node;
 }
+
