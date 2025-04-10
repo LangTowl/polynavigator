@@ -14,7 +14,7 @@
   <div class="originDestinationBox">
     <div class="destinationInput">
       <div class="titleBoxBot">
-        <span class="titleTextBot">From</span>
+        <span class="filterTitle">From</span>
       </div>
       <select class="selectBox" [(ngModel)]="selectedGroup1">
         <option *ngFor="let group of groupOptions" [value]="group">{{ group }}</option>
@@ -26,7 +26,7 @@
 
     <div class="destinationInput">
       <div class="titleBoxBot">
-        <span class="titleTextBot">To</span>
+        <span class="filterTitle">To</span>
       </div>
       <select class="selectBox" [(ngModel)]="selectedGroup2">
         <option *ngFor="let group of groupOptions" [value]="group">{{ group }}</option>

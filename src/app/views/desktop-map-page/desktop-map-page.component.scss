@@ -7,6 +7,7 @@
   --MainPolyDarkGrey: #586066;
   --MainPolyCyberBlue: #009FDF;
   --BorderRadius: 2vw;
+  overflow: hidden;
 }
 
 html, body {
@@ -17,6 +18,7 @@ html, body {
   background-color: white;
   overflow: hidden;
   display: flex;
+  position:relative;
 }
 
 .leftSide {
@@ -59,34 +61,37 @@ html, body {
 }
 
 .titleBoxBot {
-  background: linear-gradient(0deg, var(--MainPolyGrey), black);
-  width: 100%;
-  outline: black solid var(--MainPolyGrey);
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 95%;
+  margin-bottom: -3%;
 }
 
 .originDestinationBox {
   display: flex;
+  justify-content: flex-end;
   object-fit: contain;
   width: 100%;
   background: var(--MainPolyDarkGrey);
   flex-direction: column;
-  padding-bottom: 3%;
+  padding-bottom: 1%;
+  padding-top: 1%;
 }
-
 .destinationInput {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  justify-content: flex-end;
   width: 100%;
 }
 
 .selectBox {
   width: 95%;
-  padding: 1.5%;
   font-size: 1.2vw;
+  margin-bottom: 0.2vw;
+  margin-top: 0.2vw;
   background-color: var(--MainPolyDarkGrey);
-  margin: 2%;
   font-family: var(--font-family);
   color: white;
   border: 0.1vw solid var(--MainPolyGrey);
@@ -95,11 +100,14 @@ html, body {
 
 .routeButtonContainer {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   margin-top: 2%;
+  margin-left: 3%;
+
 }
 
 .findRouteButton {
+
   padding: 2% 4%;
   background: linear-gradient(-135deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
   color: white;
@@ -116,17 +124,13 @@ html, body {
   opacity: 0.9;
 }
 
-/* ------------------ */
-/* Filtering UI styles */
-/* ------------------ */
-
 .filterSection {
-  margin-top: 3%;
   border-top: 0.2vw solid var(--MainPolyGrey);
   padding: 3%;
   background-color: var(--MainPolyDarkGrey);
   flex: 1;
   overflow-y: auto;
+  text-align: left;
 }
 
 .filterTitle {
@@ -240,3 +244,4 @@ html, body {
   color: white;
   font-family: var(--font-family);
 }
+
