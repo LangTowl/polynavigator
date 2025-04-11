@@ -31,8 +31,6 @@ export class GetMapService {
 
     this.apiService.apiGetRequest<MapRequestResponse>(endpoint, [["token", token]]).subscribe({
       next: (response: MapRequestResponse) => {
-
-        // If response exists, store in local storage
         if (response) {
           localStorage.setItem('map-nodes', JSON.stringify(response));
         }
@@ -47,7 +45,7 @@ export class GetMapService {
    * Returns array of Node objects, empty array if no nodes exists
    */
   fetchMapFromStorage(): MapRequestResponse {
-    // Check if nodes are loated in storage
+    // Check if nodes are located in storage
     if (localStorage.getItem('map-nodes') === null) {
       alert("No nodes found in cache...");
       return [];

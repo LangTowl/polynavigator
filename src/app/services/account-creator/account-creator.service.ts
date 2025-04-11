@@ -23,21 +23,25 @@ export class AccountCreatorService {
       password: password
     }
 
-    this.apiService.apiPostRequest(endpoint, payload).subscribe({
-      next: (response: SignInResponse) => {
-        if (response.ok) {
-          console.log("Server response to account creation request: good");
+    if (password.length >= 10 && password.length <= 20) {
+      this.apiService.apiPostRequest(endpoint, payload).subscribe({
+        next: (response: SignInResponse) => {
+          if (response.ok) {
+            console.log("Server response to account creation request: good");
 
-          this.tokenHandler.updateToken(response.user!.token);
+            this.tokenHandler.updateToken(response.user!.token);
 
-          this.router.navigate(["/map"]);
-        } else {
-          console.log("Request to create new user denied: " + response.message)
+            this.router.navigate(["/map"]);
+          } else {
+            console.log("Request to create new user denied: " + response.message)
+          }
+        },
+        error: (error) => {
+          console.log("Error encountered in createAccountRequest: " + error);
         }
-      },
-      error: (error) => {
-        console.log("Error encountered in createAccountRequest: " + error);
-      }
-    })
+      })
+    } else {
+      alert("Weak password, or password is too long.")
+    }
   }
 }

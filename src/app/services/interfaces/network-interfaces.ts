@@ -37,3 +37,6 @@ export interface MapRequestResponse {
   [key : number]: Node;
 }
 
+export interface NodesToTraverse {
+  ids: [number];
+}
