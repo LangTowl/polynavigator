@@ -1,80 +1,81 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, ViewChild, inject } from '@angular/core';
 import svgPanZoom from 'svg-pan-zoom';
-import { NgForOf } from '@angular/common';
-import {GetMapService} from '../../services/get-map/get-map.service';
-import {Geolocation, MapRequestResponse} from '../../services/interfaces/network-interfaces';
-import {NodesToTraverseService} from '../../services/nodes-to-traverse/nodes-to-traverse.service';
-import {GeolocatorService} from '../../services/geolocator/geolocator.service';
+import { NgForOf, NgIf } from '@angular/common';
+import { GetMapService } from '../../services/get-map/get-map.service';
+import { FormsModule } from '@angular/forms';
+import { MapRequestResponse } from '../../services/interfaces/network-interfaces';
 
 @Component({
   selector: 'app-desktop-map-page',
   templateUrl: './desktop-map-page.component.html',
-  imports: [NgForOf],
+  imports: [NgForOf, NgIf, FormsModule],
   styleUrls: ['./desktop-map-page.component.scss']
 })
 export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
-
-  // Inject services
+  //Inject services
   getMapService = inject(GetMapService);
-  nodesToTraverseService = inject(NodesToTraverseService);
-  geoLocatorService = inject(GeolocatorService);
 
-  // Dictionary to store all nodes
-  nodeDictionary: MapRequestResponse = {};
+  nodeDictionary: MapRequestResponse = this.getMapService.fetchMapFromStorage();
 
-  ngOnInit() {
-    this.nodeDictionary = this.getMapService.fetchMapFromStorage();
 
-    // Test location API
-    let location = this.geoLocatorService.fetchGPSLocation().then(
-      (location: Geolocation) => {
-        console.log("Lat: " + location.latitude + "\nLong: " + location.longitude);
-        return location;
-      }
-    );
-
-    // Example on how to iterate through each key value par in the dictionary
-    // Object.entries(this.nodeDictionary).forEach(([key, node]) => {
-    //   console.log(`Key: ${key}, x: ${node.x} y: ${node.y}`);
-    // });
-  }
+  //all of these defenitions below are fairly self explanitory
+  nodeKeys: number[] = [];
+  bufferX = -130;
+  bufferY = 1;
+  paths: { d: string }[] = [];
+  groupOptions: string[] = [];
+  groupedNames: { [key: string]: string[] } = {};
+  selectedGroup1: string = '';
+  selectedGroup2: string = '';
+  selectedName1: string = '';
+  selectedName2: string = '';
+  tagFilter = '';
+  filteredTagGroups: string[] = [];
+  expandedGroups: { [key: string]: boolean } = {};
 
   @ViewChild('map', { static: false }) svgElement!: ElementRef;
   panZoomInstance: any;
 
-  nodes = [
-    { id: 0, x: 570, y: 326 },
-    { id: 1, x: 586, y: 313 },
-    { id: 2, x: 642, y: 303 },
-    { id: 3, x: 664, y: 275 },
-    { id: 4, x: 690, y: 246 },
-    { id: 5, x: 702, y: 236 },
-    { id: 6, x: 709, y: 267 },
-    { id: 7, x: 721, y: 256 },
-    { id: 8, x: 723, y: 283 },
-    { id: 9, x: 752, y: 252 },
-    { id: 10, x: 758, y: 242 },
-    { id: 11, x: 824, y: 292 },
-    { id: 12, x: 849, y: 270 },
-    { id: 13, x: 838, y: 262 },
-    { id: 14, x: 829, y: 271 },
-    { id: 15, x: 867, y: 284 },
-    { id: 16, x: 862, y: 289 },
-    { id: 17, x: 836, y: 301 },
-    { id: 18, x: 842, y: 297 },
-    { id: 19, x: 870, y: 331 },
-    { id: 20, x: 883, y: 346 },
-    { id: 21, x: 890, y: 341 },
-    { id: 22, x: 849, y: 342 }
-  ];
 
-  bufferX = -130;
-  bufferY = 1;
-  paths: { d: string }[] = [];
+
+  //NG on INT
+  ngOnInit() {
+
+
+
+    //For populating all of the groupnames in the first drop down box
+    const groups = new Set<string>();
+
+    //pulls all nodes from the node dictionary that arent in path group
+    for (const node of Object.values(this.nodeDictionary)) {
+      if (node.group !== 'Path') {
+        groups.add(node.group);
+      }
+    }
+
+    this.groupOptions = Array.from(groups);
+
+    this.groupedNames = {};
+
+    for (const node of Object.values(this.nodeDictionary)) {
+      if (node.group !== 'Path') {
+        if (!this.groupedNames[node.group]) {
+          this.groupedNames[node.group] = [];
+        }
+
+        this.groupedNames[node.group].push(node.name);
+      }
+    }
+    /////
+
+
+    //populate the nodeKeys array from the dictionary (ensure keys are numbers)
+    this.nodeKeys = Object.keys(this.nodeDictionary).map(key => parseInt(key, 10));
+
+  }
 
   ngAfterViewInit() {
-    this.generatePaths();
-
+    //zomom and pan functionality
     const svg = document.getElementById('map') as unknown as SVGSVGElement;
     if (svg) {
       this.panZoomInstance = svgPanZoom(svg, {
@@ -87,7 +88,7 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
         zoomScaleSensitivity: 0.2
       });
 
-      // Get the actual image size
+      //get image size
       const boundingBox = svg.getBoundingClientRect();
       const imageWidth = boundingBox.width;
       const imageHeight = boundingBox.height;
@@ -106,39 +107,132 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
         };
       };
 
+      //set defualt pan zoom
       this.panZoomInstance.setBeforePan(beforePan);
+
+      //this so it quieres every tag to start
+      this.filterByTag();
     }
   }
 
+  findDirectRoute() {
+    //clear any existing paths
+    this.paths = [];
+
+    //check if start and end are valid impossible not to be but just a check
+    if (!this.selectedName1 || !this.selectedName2) {
+      console.error('Please select both start and end locations');
+      return;
+    }
+
+
+    //this finds the id number
+    const startNodeKey = this.findNodeKeyByName(this.selectedName1);
+    const endNodeKey = this.findNodeKeyByName(this.selectedName2);
+
+    //this line can be replaced to call my other funciton that makes more than one path
+    const startNode = this.nodeDictionary[Number(startNodeKey)];
+    const endNode = this.nodeDictionary[Number(endNodeKey)];
+
+    //create a path between start and end
+    this.paths = [{
+      d: `M${startNode.x + this.bufferX},${startNode.y + this.bufferY} L${endNode.x + this.bufferX},${endNode.y + this.bufferY}`
+      }];
+    ///
+
+
+    //console.log('Path created:', this.paths);
+
+    //reset pan and zoom
+    if (this.panZoomInstance) {
+      setTimeout(() => {
+        this.panZoomInstance.updateBBox();
+        this.panZoomInstance.fit();
+        this.panZoomInstance.center();
+      }, 100);
+    }
+  }
+
+  //making paths function for the future, need to replace dictionary call with backend node call
   generatePaths() {
     this.paths = [];
-    for (let i = 0; i < this.nodes.length - 1; i++) {
-      const start = this.nodes[i];
-      const end = this.nodes[i + 1];
+
+    const nodeKeys = [...this.nodeKeys].sort((a, b) => a - b); // Sort numerically
+
+    for (let i = 0; i < nodeKeys.length - 1; i++) {
+      const start = this.nodeDictionary[Number(nodeKeys[i])];
+      const end = this.nodeDictionary[Number(nodeKeys[i + 1])];
+
       this.paths.push({
         d: `M${start.x + this.bufferX},${start.y + this.bufferY} L${end.x + this.bufferX},${end.y + this.bufferY}`
       });
     }
   }
 
+  //it does what the name says, gives the id number fir the naem
+  findNodeKeyByName(name: string): string | null {
+    for (const [key, node] of Object.entries(this.nodeDictionary)) {
+      if (node.name === name) {
+        return key;
+      }
+    }
+    return null;
+  }
+
+  //also does what it says, but this is for the filter boxes, tag being like mac book and stufd
+  filterByTag() {
+    const tag = this.tagFilter.toLowerCase();
+    const allTags = new Set<string>();
+
+    for (const node of Object.values(this.nodeDictionary)) {
+      node.tags?.forEach((t: string) => allTags.add(t));
+    }
+
+    const allTagArray = Array.from(allTags);
+    this.filteredTagGroups = tag
+      ? allTagArray.filter(t => t.toLowerCase().includes(tag))
+      : allTagArray;
+  }
+
+//for expanding/collapsing groups
+  toggleGroup(tag: string) {
+    this.expandedGroups[tag] = !this.expandedGroups[tag];
+  }
+
+//returns node names under a tag group
+  getNodesByTagGroup(tag: string): string[] {
+    return Object.values(this.nodeDictionary)
+      .filter(node => node.tags?.includes(tag))
+      .map(node => node.name);
+  }
+
+//returns distinct kinds for a node name
+  getNodeKinds(name: string): number[] {
+    const kinds = new Set<number>();
+    for (const node of Object.values(this.nodeDictionary)) {
+      if (node.name === name) {
+        kinds.add(node.kind);
+      }
+    }
+    return Array.from(kinds);
+  }
+//returns the id of node of a given name
+  getNodeTags(name: string): string[] {
+    const node = Object.values(this.nodeDictionary).find(n => n.name === name);
+    return node?.tags ?? [];
+  }
+  //this will assign boxes to be the chosen node, it just looks it up based on the name
+  selectNodeByName(name: string) {
+    const matchedNode = Object.values(this.nodeDictionary).find(node => node.name === name);
+    if (matchedNode) {
+      this.selectedGroup2 = matchedNode.group;
+      this.selectedName2 = matchedNode.name;
+    }
+  }
   ngOnDestroy() {
     if (this.panZoomInstance) {
       this.panZoomInstance.destroy();
     }
   }
-
-  /**
-   * Use to make API call to pull nodes to traverse into local storage
-   */
-  requestTraversalGraph() {
-    this.nodesToTraverseService.requestTraversalGraph(1, 2);
-  }
-
-  /**
-   * Use to fetch nodes to traverse
-   */
-  fetchNodesToTraverse() {
-    console.log(this.nodesToTraverseService.fetchNodesToTraverse());
-  }
-
 }
+
