@@ -29,7 +29,7 @@ export class AccountCreatorService {
           if (response.ok) {
             console.log("Server response to account creation request: good");
 
-            this.tokenHandler.updateToken(response.user!.token);
+            this.tokenHandler.updateToken(response.token!);
 
             this.router.navigate(["/map"]);
           } else {

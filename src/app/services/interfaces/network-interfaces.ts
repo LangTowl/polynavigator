@@ -8,15 +8,10 @@ export interface NetworkUser {
   password: string;
 }
 
-export interface AuthenticatedUser {
-  user: NetworkUser;
-  token: string;
-}
-
 export interface SignInResponse {
   ok: boolean;
   message: string;
-  user?: AuthenticatedUser;
+  token?: string;
 }
 
 export interface Geolocation {
