@@ -56,8 +56,8 @@
       </div>
 
       <div class="groupContent" [style.display]="expandedGroups[tagGroup] ? 'block' : 'none'">
-        <div *ngFor="let nodeName of getNodesByTagGroup(tagGroup)" class="nodeItem" (click)="selectNodeByName(nodeName)">
-          <span>{{ nodeName }}</span>
+        <div *ngFor="let nodeName of getNodesByTag(tagGroup)" class="nodeItem" (click)="selectNodeByName(nodeName)">
+          <span>{{getGroupByNode(nodeName)}}</span>
           <div class="kindGroup" *ngIf="getNodeKinds(nodeName).length > 0">
 
             <div class="tagsList">

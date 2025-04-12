@@ -200,7 +200,7 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
   }
 
 //returns node names under a tag group
-  getNodesByTagGroup(tag: string): string[] {
+  getNodesByTag(tag: string): string[] {
     return Object.values(this.nodeDictionary)
       .filter(node => node.tags?.includes(tag))
       .map(node => node.name);
@@ -221,12 +221,17 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
     const node = Object.values(this.nodeDictionary).find(n => n.name === name);
     return node?.tags ?? [];
   }
+  getGroupByNode(name: string): string[] {
+    const node = Object.values(this.nodeDictionary).find(n => n.name === name);
+    return node?.group ?? [];
+  }
   //this will assign boxes to be the chosen node, it just looks it up based on the name
   selectNodeByName(name: string) {
     const matchedNode = Object.values(this.nodeDictionary).find(node => node.name === name);
     if (matchedNode) {
       this.selectedGroup2 = matchedNode.group;
-      this.selectedName2 = matchedNode.name;
+      //uncomment if you want it to select the name too
+      //this.selectedName2 = matchedNode.name;
     }
   }
   ngOnDestroy() {
