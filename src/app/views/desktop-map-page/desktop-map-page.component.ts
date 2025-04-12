@@ -41,8 +41,6 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
   //NG on INT
   ngOnInit() {
 
-
-
     //For populating all of the groupnames in the first drop down box
     const groups = new Set<string>();
 
@@ -233,6 +231,13 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
       //uncomment if you want it to select the name too
       //this.selectedName2 = matchedNode.name;
     }
+  }
+  clear(){
+    this.selectedName1 = "";
+    this.selectedName2 = "";
+    this.selectedGroup1 = "";
+    this.selectedGroup2 = "";
+    this.paths = [];
   }
   ngOnDestroy() {
     if (this.panZoomInstance) {

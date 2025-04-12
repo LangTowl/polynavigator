@@ -100,16 +100,16 @@ html, body {
 
 .routeButtonContainer {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   margin-top: 2%;
   margin-left: 3%;
-
+  padding-right: 2.5%;
 }
 
 .findRouteButton {
 
-  padding: 2% 4%;
-  background: linear-gradient(-135deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
+  padding: 2% 8%;
+  background:var(--MainPolyPurple);
   color: white;
   border: none;
   border-radius: var(--BorderRadius);
@@ -122,6 +122,7 @@ html, body {
 
 .findRouteButton:hover {
   opacity: 0.9;
+  background:var(--MainPolyCyberBlue);
 }
 
 .filterSection {
