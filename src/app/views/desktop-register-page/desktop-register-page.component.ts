@@ -20,8 +20,8 @@ export class DesktopRegisterPageComponent {
 
   // Input fields
   username: string = "Bob"
-  password: string = "12345678";
-  passwordConfirm: string = "12345678";
+  password: string = "1234567890";
+  passwordConfirm: string = "1234567890";
 
   /**
    * Navigate to log in from register page
