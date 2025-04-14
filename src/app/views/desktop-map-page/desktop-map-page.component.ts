@@ -251,7 +251,10 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
 
   // Implement langs function call here
   requestNodesToTraverse() {
-    this.requestNodesToTraverseService.requestTraversalGraph(0, "5", false);
+    this.requestNodesToTraverseService.requestTraversalGraph(1, '5', false, '/traverse', () => {
+      const data = this.requestNodesToTraverseService.fetchNodesToTraverse();
+      console.log("RAH");
+    });
   }
 }
 

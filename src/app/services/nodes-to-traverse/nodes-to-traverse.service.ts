@@ -19,8 +19,9 @@ export class NodesToTraverseService {
    * @param end -> number start location id
    * @param endpoint -> target backend endpoint
    * @param isGroup -> boolean stfu
+   * @param onComplete
    */
-  requestTraversalGraph(start: number , end: string, isGroup: boolean, endpoint: string = "/traverse") {
+  requestTraversalGraph(start: number , end: string, isGroup: boolean, endpoint: string = "/traverse", onComplete?: () => void) {
     // Collect user token
     let token = this.tokenHandler.fetchToken() ?? "";
 
@@ -29,9 +30,15 @@ export class NodesToTraverseService {
         if (response) {
           sessionStorage.setItem('nodes-to-traverse', JSON.stringify(response));
         }
+
+        // Trigger callback
+        if (onComplete) onComplete();
       },
       error: (error) => {
         console.log(error);
+
+        // Trigger callback
+        if (onComplete) onComplete();
       }
     });
   }
