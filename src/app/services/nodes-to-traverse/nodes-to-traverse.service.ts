@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import {ApiService} from '../api/api.service';
 import {TokenHandlerService} from '../token-handler/token-handler.service';
-import {NodesToTraverse} from '../interfaces/network-interfaces';
+import {NodesToTraverse, NodesToTraversePayload} from '../interfaces/network-interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,15 @@ export class NodesToTraverseService {
     // Collect user token
     let token = this.tokenHandler.fetchToken() ?? "";
 
-    this.apiService.apiGetRequest<NodesToTraverse>(endpoint, [["token", token], ["start", start.toString()], ["end", end], ["is_group", isGroup.toString()]]).subscribe({
+    // Construct payload
+    const payload: NodesToTraversePayload = {
+      token :token,
+      start: start,
+      end: end,
+      is_group: isGroup
+    }
+
+    this.apiService.apiPostRequest<NodesToTraversePayload>(endpoint, payload).subscribe({
       next: (response: NodesToTraverse) => {
         if (response) {
           sessionStorage.setItem('nodes-to-traverse', JSON.stringify(response));

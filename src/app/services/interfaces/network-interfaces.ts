@@ -35,3 +35,10 @@ export interface MapRequestResponse {
 export interface NodesToTraverse {
   ids: [number];
 }
+
+export interface NodesToTraversePayload {
+  token: string;
+  start: number;
+  end: string;
+  is_group: boolean;
+}
