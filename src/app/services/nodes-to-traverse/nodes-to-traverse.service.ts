@@ -18,12 +18,13 @@ export class NodesToTraverseService {
    * @param start -> number, start location id
    * @param end -> number start location id
    * @param endpoint -> target backend endpoint
+   * @param isGroup -> boolean stfu
    */
-  requestTraversalGraph(start: number , end: number, endpoint: string = "/traverse") {
+  requestTraversalGraph(start: number , end: string, isGroup: boolean, endpoint: string = "/traverse") {
     // Collect user token
     let token = this.tokenHandler.fetchToken() ?? "";
 
-    this.apiService.apiGetRequest<NodesToTraverse>(endpoint, [["token", token], ["start", String(start)], ["end", String(end)]]).subscribe({
+    this.apiService.apiGetRequest<NodesToTraverse>(endpoint, [["token", token], ["start", start.toString()], ["end", end], ["is_group", isGroup.toString()]]).subscribe({
       next: (response: NodesToTraverse) => {
         if (response) {
           sessionStorage.setItem('nodes-to-traverse', JSON.stringify(response));

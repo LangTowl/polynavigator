@@ -4,6 +4,7 @@ import { NgForOf, NgIf } from '@angular/common';
 import { GetMapService } from '../../services/get-map/get-map.service';
 import { FormsModule } from '@angular/forms';
 import { MapRequestResponse } from '../../services/interfaces/network-interfaces';
+import {NodesToTraverseService} from '../../services/nodes-to-traverse/nodes-to-traverse.service';
 
 @Component({
   selector: 'app-desktop-map-page',
@@ -14,6 +15,7 @@ import { MapRequestResponse } from '../../services/interfaces/network-interfaces
 export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
   //Inject services
   getMapService = inject(GetMapService);
+  requestNodesToTraverseService = inject(NodesToTraverseService)
 
   nodeDictionary: MapRequestResponse = this.getMapService.fetchMapFromStorage();
 
@@ -40,6 +42,8 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
 
   //NG on INT
   ngOnInit() {
+    // Make request upon open for nodes from back n cache
+    this.getMapService.requestMapNodes();
 
     //For populating all of the groupnames in the first drop down box
     const groups = new Set<string>();
@@ -243,6 +247,11 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
     if (this.panZoomInstance) {
       this.panZoomInstance.destroy();
     }
+  }
+
+  // Implement langs function call here
+  requestNodesToTraverse() {
+    this.requestNodesToTraverseService.requestTraversalGraph(0, "5", false);
   }
 }
 
