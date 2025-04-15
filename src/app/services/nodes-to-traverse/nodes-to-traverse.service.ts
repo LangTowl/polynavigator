@@ -51,11 +51,13 @@ export class NodesToTraverseService {
     });
   }
 
+
+  //lukas changed this
   fetchNodesToTraverse() {
     // Check if nodes are located in storage
     if (sessionStorage.getItem('nodes-to-traverse') === null) {
       alert("No nodes found in cache...");
-      return [];
+      return {ids:[]};
     } else {
       return JSON.parse(sessionStorage.getItem('nodes-to-traverse') ?? "[]") as NodesToTraverse;
     }

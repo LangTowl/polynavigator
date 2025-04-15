@@ -19,21 +19,22 @@ export interface Geolocation {
   longitude: number;
 }
 
+//lukas updated this for kind to be a boolean now
 export interface Node {
   x: number;
   y: number;
   name: string
   group: string;
-  kind: number;
+  is_path: boolean;
   tags: string[];
 }
 
 export interface MapRequestResponse {
   [key : number]: Node;
 }
-
+//lukas changed this
 export interface NodesToTraverse {
-  ids: [number];
+  ids: number[];
 }
 
 export interface NodesToTraversePayload {

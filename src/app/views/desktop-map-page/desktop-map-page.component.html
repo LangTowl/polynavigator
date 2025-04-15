@@ -37,7 +37,7 @@
     </div>
 
     <div class="routeButtonContainer">
-      <button class="findRouteButton" (click)="requestNodesToTraverse()">Find Route</button>
+      <button class="findRouteButton" (click)="generatePaths()">Find Route</button>
 
       <button class="findRouteButton" (click)="clear()">Clear</button>
     </div>
@@ -78,19 +78,19 @@
 
     <path *ngFor="let path of paths"
           [attr.d]="path.d"
-          stroke="green"
+          stroke='var(--MainPolyCyberBlue)'
           stroke-width="5"></path>
 
     <ng-container *ngFor="let key of nodeKeys">
       <circle
-        *ngIf="nodeDictionary[key].kind === 0"
+        *ngIf="!nodeDictionary[key].is_path"
         [attr.cx]="nodeDictionary[key].x + bufferX"
         [attr.cy]="nodeDictionary[key].y + bufferY"
         [attr.r]="(selectedName1 === '' && selectedName2 === '' ) ? 4.5 : 8"
         [attr.fill]="
-            (selectedName1 === '' && selectedName2 === '') ? 'Grey' :
-            (nodeDictionary[key].name === selectedName1) ? 'green' :
-            (nodeDictionary[key].name === selectedName2) ? 'purple' : 'transparent'
+            (selectedName1 === '' && selectedName2 === '') ? 'var(--MainPolyDarkGrey)' :
+            (nodeDictionary[key].name === selectedName1) ? 'var(--MainPolyPurple)' :
+            (nodeDictionary[key].name === selectedName2) ? 'var(--MainPolyPurple)' : 'transparent'
           ">
       </circle>
     </ng-container>
