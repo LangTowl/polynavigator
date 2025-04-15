@@ -167,7 +167,7 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
     const startNodeKey = this.findNodeKeyByName(this.selectedName1);
     let endNodeKey;
 
-    if (this.selectedName2 !== "") {
+    if (this.selectedName2 === "") {
       endNodeKey = this.selectedGroup2;
     } else {
       endNodeKey = this.findNodeKeyByName(this.selectedName2);
@@ -176,7 +176,7 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
     this.requestNodesToTraverseService.requestTraversalGraph(
     Number(startNodeKey),
     String(endNodeKey),
-    this.selectedName2 !== "",
+    this.selectedName2 === "",
      '/traverse',
     () => {
 
