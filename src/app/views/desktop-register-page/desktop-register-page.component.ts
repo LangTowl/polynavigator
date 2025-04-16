@@ -19,9 +19,9 @@ export class DesktopRegisterPageComponent {
   constructor(private router: Router) {}
 
   // Input fields
-  username: string = "Bob"
-  password: string = "1234567890";
-  passwordConfirm: string = "1234567890";
+  username: string = ""
+  password: string = "";
+  passwordConfirm: string = "";
 
   /**
    * Navigate to log in from register page
