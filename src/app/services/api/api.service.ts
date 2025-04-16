@@ -63,7 +63,7 @@ export class ApiService {
    * @param endpoint -> specified target endpoint
    * @param params -> additional headers to be sent with get request
    */
-  apiGetRequest<RESPONSE>(endpoint: string, params: [string, string][] | null): Observable<RESPONSE> {
+  apiGetRequest<RESPONSE>(endpoint: string, params: [string, any][] | null): Observable<RESPONSE> {
     console.log("Outgoing GET request to " + endpoint + " sent...");
 
     // Establish headers for get request

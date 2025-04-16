@@ -33,7 +33,7 @@ export class LoginServiceService {
         if (response.ok) {
           console.log("Server response to sign in request: good");
 
-          this.tokenHandler.updateToken(response.user!.token);
+          this.tokenHandler.updateToken(response.token!);
 
           this.router.navigate(["/map"]);
         } else {

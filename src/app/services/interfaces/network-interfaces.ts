@@ -8,15 +8,10 @@ export interface NetworkUser {
   password: string;
 }
 
-export interface AuthenticatedUser {
-  user: NetworkUser;
-  token: string;
-}
-
 export interface SignInResponse {
   ok: boolean;
   message: string;
-  user?: AuthenticatedUser;
+  token?: string;
 }
 
 export interface Geolocation {
@@ -24,15 +19,27 @@ export interface Geolocation {
   longitude: number;
 }
 
+//lukas updated this for kind to be a boolean now
 export interface Node {
   x: number;
   y: number;
   name: string
   group: string;
-  kind: number;
+  is_path: boolean;
   tags: string[];
 }
 
 export interface MapRequestResponse {
   [key : number]: Node;
+}
+//lukas changed this
+export interface NodesToTraverse {
+  ids: number[];
+}
+
+export interface NodesToTraversePayload {
+  token: string;
+  start: number;
+  end: string;
+  is_group: boolean;
 }
