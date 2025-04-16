@@ -76,6 +76,14 @@
   <svg #map id="map" width="100%" height="100%" viewBox="0 0 1300 1147">
     <image href="map-2.svg" width="1300" height="1147"/>
 
+    <image    href="person.fill.svg"
+              [attr.x]="currentLong + bufferX"
+              [attr.y]="currentLat + bufferY"
+              width="20"
+              height="20"
+              [attr.style]="'color: var(--MainPolyCyberBlue)'"
+    />
+
     <path *ngFor="let path of paths"
           [attr.d]="path.d"
           stroke='var(--MainPolyCyberBlue)'

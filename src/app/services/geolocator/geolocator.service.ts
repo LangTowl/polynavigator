@@ -77,4 +77,37 @@ export class GeolocatorService {
 
     return 0;
   }
+
+
+  //lukie made this so that it waches the postion
+  watchPosition(
+    successCallback: (position: Geolocation) => void,
+    errorCallback?: (error: GeolocationPositionError) => void
+  ): number | null {
+    if (navigator.geolocation) {
+      const options = {
+        enableHighAccuracy: true,
+        maximumAge: 0,
+        timeout: 5000 //time outtttt in ms
+      };
+
+      return navigator.geolocation.watchPosition(
+        (position) => {
+          const lat = this.computeRelativeLat(position.coords.latitude);
+          const long = this.computeRelativeLong(position.coords.longitude);
+          successCallback({ latitude: lat, longitude: long });
+        },
+        (error) => {
+          if (errorCallback) {
+            errorCallback(error);
+          }
+        },
+        options
+      );
+    } else {
+      console.error("Geolocation not supported.");
+      return null;
+    }
+  }
+
 }

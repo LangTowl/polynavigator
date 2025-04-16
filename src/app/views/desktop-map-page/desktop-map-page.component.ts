@@ -22,7 +22,6 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
 
   nodeDictionary: MapRequestResponse = {};
 
-
   //all of these defenitions below are fairly self explanitory
   nodeKeys: number[] = [];
   bufferX = -130;
@@ -37,20 +36,22 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
   tagFilter = '';
   filteredTagGroups: string[] = [];
   expandedGroups: { [key: string]: boolean } = {};
-
-  @ViewChild('map', { static: false }) svgElement!: ElementRef;
+  currentLong = 0;
+  currentLat = 0;
+  watchId: number | null = null;
+  @ViewChild('map', {static: false}) svgElement!: ElementRef;
   panZoomInstance: any;
-
 
 
   //NG on INT
   ngOnInit() {
 
-      // Make request upon open for nodes from back n cache
+    // Make request upon open for nodes from back n cache
     this.getMapService.requestMapNodes();
     this.nodeDictionary = this.getMapService.fetchMapFromStorage();
+    this.startWatchingGPS();
 
-
+    this.getNodeFirstFromGeoLocation();
     //For populating all of the groupnames in the first drop down box
     const groups = new Set<string>();
 
@@ -123,43 +124,6 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
     }
   }
 
-  findDirectRoute() {
-    //clear any existing paths
-    this.paths = [];
-
-    //check if start and end are valid impossible not to be but just a check
-    if (!this.selectedName1 || !this.selectedName2) {
-      console.error('Please select both start and end locations');
-      return;
-    }
-
-
-    //this finds the id number
-    const startNodeKey = this.findNodeKeyByName(this.selectedName1);
-    const endNodeKey = this.findNodeKeyByName(this.selectedName2);
-
-    //this line can be replaced to call my other funciton that makes more than one path
-    const startNode = this.nodeDictionary[Number(startNodeKey)];
-    const endNode = this.nodeDictionary[Number(endNodeKey)];
-
-    //create a path between start and end
-    this.paths = [{
-      d: `M${startNode.x + this.bufferX},${startNode.y + this.bufferY} L${endNode.x + this.bufferX},${endNode.y + this.bufferY}`
-      }];
-    ///
-
-
-    //console.log('Path created:', this.paths);
-
-    //reset pan and zoom
-    if (this.panZoomInstance) {
-      setTimeout(() => {
-        this.panZoomInstance.updateBBox();
-        this.panZoomInstance.fit();
-        this.panZoomInstance.center();
-      }, 100);
-    }
-  }
   //lukas is me and me is have to fix and explain i little zawhg
   generatePaths() {
     this.paths = [];
@@ -174,15 +138,15 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
     }
 
     this.requestNodesToTraverseService.requestTraversalGraph(
-    Number(startNodeKey),
-    String(endNodeKey),
-    this.selectedName2 === "",
-     '/traverse',
-    () => {
+      Number(startNodeKey),
+      String(endNodeKey),
+      this.selectedName2 === "",
+      '/traverse',
+      () => {
 
-      const data = this.requestNodesToTraverseService.fetchNodesToTraverse() as NodesToTraverse;
+        const data = this.requestNodesToTraverseService.fetchNodesToTraverse() as NodesToTraverse;
 
-      if(data){
+        if (data) {
           for (let i = 0; i < data.ids.length - 1; i++) {
             const currentNodeId = data.ids[i];
             const nextNodeId = data.ids[i + 1];
@@ -195,11 +159,21 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
                 d: `M${start.x + this.bufferX},${start.y + this.bufferY} L${end.x + this.bufferX},${end.y + this.bufferY}`
               });
             }
-          }}
-      else{console.log("No Traversable Nodes Found")}
+          }
+        } else {
+          console.log("No Traversable Nodes Found")
+        }
 
       }
     );
+
+    if (this.panZoomInstance) {
+      setTimeout(() => {
+        this.panZoomInstance.updateBBox();
+        this.panZoomInstance.fit();
+        this.panZoomInstance.center();
+      }, 100);
+    }
   }
 
   //it does what the name says, gives the id number fir the naem
@@ -253,15 +227,18 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
     }
     return Array.from(kinds);
   }
+
 //returns the id of node of a given name
   getNodeTags(name: string): string[] {
     const node = Object.values(this.nodeDictionary).find(n => n.name === name);
     return node?.tags ?? [];
   }
+
   getGroupByNode(name: string): string[] {
     const node = Object.values(this.nodeDictionary).find(n => n.name === name);
     return node?.group ?? [];
   }
+
   //this will assign boxes to be the chosen node, it just looks it up based on the name
   selectNodeByName(name: string) {
     const matchedNode = Object.values(this.nodeDictionary).find(node => node.name === name);
@@ -272,28 +249,72 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
       //this.selectedName2 = matchedNode.name;
     }
   }
-  clear(){
+
+  clear() {
     this.selectedName1 = "";
     this.selectedName2 = "";
     this.selectedGroup1 = "";
     this.selectedGroup2 = "";
     this.paths = [];
   }
+
   ngOnDestroy() {
     if (this.panZoomInstance) {
       this.panZoomInstance.destroy();
     }
+    if (this.watchId !== null) {
+      navigator.geolocation.clearWatch(this.watchId);
+    }
   }
 
-  // Implement langs function call here
-  requestNodesToTraverse() {
 
-    //if sending sepcific group, change to true and put group string name
-    //(homeNode,Nodeid or group name in string '',is group true or false
-    this.requestNodesToTraverseService.requestTraversalGraph(1, '7', false, '/traverse', () => {
-      const data = this.requestNodesToTraverseService.fetchNodesToTraverse();
-      console.log(data);
-    });
+  getNodeFirstFromGeoLocation(){
+    this.geoService.fetchGPSLocation()
+      .then((location) => {
+
+        console.log("GPS Location:", location);
+
+        let distanceOld = 0;
+        let distanceNew = 0;
+        let actualDistance = Math.sqrt(Math.pow(location.latitude,2) + Math.pow(location.longitude,2));
+        let nodeClosests = this.nodeDictionary[0];
+
+        for(let i = 0; i < this.nodeKeys.length; i++) {
+
+          const nodeNew = this.nodeDictionary[(this.nodeKeys)[i]];
+
+          if (!nodeNew.is_path) {
+            distanceNew = Math.abs(Math.abs(actualDistance) - Math.abs(Math.sqrt(Math.pow(nodeNew.x, 2) + Math.pow(nodeNew.y, 2))));
+            if (distanceNew < distanceOld) {
+              distanceOld = distanceNew;
+              nodeClosests = nodeNew;
+            }
+
+          }
+
+        }
+        this.selectedName1 = nodeClosests.name;
+        this.selectedGroup1 = nodeClosests.group;
+
+      })
+      .catch((error) => {
+        console.error("Error fetching location:", error);
+      });
+
   }
+  //me be watchibg the gps
+  startWatchingGPS() {
+    this.watchId = this.geoService.watchPosition(
+      (location) => {
+        console.log(location);
+        this.currentLat = location.latitude;
+        this.currentLong = location.longitude;
+      },
+      (error) => {
+        console.error("GPS Error:", error);
+      }
+    );
+  }
+
 }
 
