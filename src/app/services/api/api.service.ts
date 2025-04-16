@@ -17,7 +17,7 @@ export class ApiService {
   http = inject(HttpClient);
 
   // Local vars
-  private url = 'http://127.0.0.1:5000';
+  private url = 'https://d37c-34-122-95-14.ngrok-free.app';
 
   constructor() { }
 
