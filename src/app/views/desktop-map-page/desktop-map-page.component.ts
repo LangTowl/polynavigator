@@ -159,6 +159,7 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
                 d: `M${start.x + this.bufferX},${start.y + this.bufferY} L${end.x + this.bufferX},${end.y + this.bufferY}`
               });
             }
+            if(i === data.ids.length - 2) {this.selectedName2 = String(end.name);}
           }
         } else {
           console.log("No Traversable Nodes Found")
@@ -167,13 +168,6 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
       }
     );
 
-    if (this.panZoomInstance) {
-      setTimeout(() => {
-        this.panZoomInstance.updateBBox();
-        this.panZoomInstance.fit();
-        this.panZoomInstance.center();
-      }, 100);
-    }
   }
 
   //it does what the name says, gives the id number fir the naem
