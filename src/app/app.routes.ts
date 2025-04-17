@@ -26,6 +26,6 @@ export const routes: Routes = [
   {
     path: 'map',
     component: getPlatform() === 'mobile' ? MobileMapPageComponent : DesktopMapPageComponent,
-    //canActivate: [NavigationGuardGuard]
+    canActivate: [NavigationGuardGuard]
   }
 ];
