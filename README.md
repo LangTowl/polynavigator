@@ -1,59 +1,46 @@
-# CampusNavFront
+# Getting Started
+This guide explains how to clone the repository and run the Angular application locally.
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.1.7.
+### Prerequisites
+Make sure you have the following installed on your machine:
+- [Node.js and npm](https://nodejs.org/)
+- [Angular CLI]()
+- [Git](https://git-scm.com/)
 
-## Development server
+### Clone the repository
+Open your terminal and run the following command to clone the repository:
 
-To start a local development server, run:
+```bash
+git clone https://github.com/LangTowl/polynavigator.git
+```
 
+Inside of the repository, install the project dependencies:
+```bash
+npm install
+```
+
+Install application specific dependancies:
+```bash
+npm install -r requirements.txt
+```
+
+### Serve the application
+Start the development server by running:
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+### GitHub Pages Hosting
+To host the application on GitHub pages, ensure that GitHub actions are enabled. Navigate to settings > pages, and select the branch you want to serve from. Inside of that branch, ensure that there is a /docs folder available.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+In your IDE of choice, run the following command in the terminal
 
 ```bash
-ng generate --help
+ng build --output-path docs --base-href /your-reposiotiry-name-here/
 ```
 
-## Building
+Ensure that the build folder is created inside of docs.
 
-To build the project run:
+Note: this command will sometimes create a sub folder called browser. Place all files in browser into docs.
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Once pushed, GitHub actions will automatically serve the application over HTTPS.
