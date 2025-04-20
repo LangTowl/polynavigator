@@ -159,6 +159,7 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
                 d: `M${start.x + this.bufferX},${start.y + this.bufferY} L${end.x + this.bufferX},${end.y + this.bufferY}`
               });
             }
+            if(i === data.ids.length - 2) {this.selectedName2 = String(end.name);}
           }
         } else {
           console.log("No Traversable Nodes Found")
@@ -167,13 +168,6 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
       }
     );
 
-    if (this.panZoomInstance) {
-      setTimeout(() => {
-        this.panZoomInstance.updateBBox();
-        this.panZoomInstance.fit();
-        this.panZoomInstance.center();
-      }, 100);
-    }
   }
 
   //it does what the name says, gives the id number fir the naem
@@ -268,39 +262,39 @@ export class DesktopMapPageComponent implements AfterViewInit, OnDestroy {
   }
 
 
-  getNodeFirstFromGeoLocation(){
+  getNodeFirstFromGeoLocation() {
     this.geoService.fetchGPSLocation()
       .then((location) => {
+        //console.log("GPS Location:", location);
 
-        console.log("GPS Location:", location);
-
-        let distanceOld = 0;
-        let distanceNew = 0;
-        let actualDistance = Math.sqrt(Math.pow(location.latitude,2) + Math.pow(location.longitude,2));
-        let nodeClosests = this.nodeDictionary[0];
+        //starting with infinity because we want every distance to be smaller initally
+        let closestDistance = Infinity;
+        let nodeClosest = this.nodeDictionary[0];
 
         for(let i = 0; i < this.nodeKeys.length; i++) {
-
           const nodeNew = this.nodeDictionary[(this.nodeKeys)[i]];
 
           if (!nodeNew.is_path) {
-            distanceNew = Math.abs(Math.abs(actualDistance) - Math.abs(Math.sqrt(Math.pow(nodeNew.x, 2) + Math.pow(nodeNew.y, 2))));
-            if (distanceNew < distanceOld) {
-              distanceOld = distanceNew;
-              nodeClosests = nodeNew;
+            //euclidan disatnce formula or whatever its called
+            const distance = Math.sqrt(
+              Math.pow(location.latitude - nodeNew.x, 2) +
+              Math.pow(location.longitude - nodeNew.y, 2)
+            );
+
+            if (distance < closestDistance) {
+              closestDistance = distance;
+              nodeClosest = nodeNew;
             }
-
           }
-
         }
-        this.selectedName1 = nodeClosests.name;
-        this.selectedGroup1 = nodeClosests.group;
 
+        this.selectedName1 = nodeClosest.name;
+        this.selectedGroup1 = nodeClosest.group;
+        //console.log(nodeClosest);
       })
       .catch((error) => {
         console.error("Error fetching location:", error);
       });
-
   }
   //me be watchibg the gps
   startWatchingGPS() {

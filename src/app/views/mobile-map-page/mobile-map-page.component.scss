@@ -1,88 +1,272 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
 :host {
   --font-family: 'Noto Sans', sans-serif;
   --MainPolyPurple: #501d83;
   --MainPolyGrey: #A7B4C3;
   --MainPolyDarkGrey: #586066;
   --MainPolyCyberBlue: #009FDF;
-  --BorderRadius: 20px;
-
-  display: block;
-  width: 100vw;
-  height: 100vh;
-  overflow: hidden;
+  --BorderRadius: 15px;
+  --transition-time: 0.3s;
 }
 
 html, body {
   margin: 0;
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-  width: 100vw;
-  height: 100vh;
-  background-color: white;
-  overflow: hidden;
+  padding: 0;
   display: flex;
+  position: fixed;
+  inset: 0;
+  background-color: var(--MainPolyGrey);
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-family);
   flex-direction: column;
-
-}
-.leftSide{
-  width: 100%;
-  height: 5%;
-  border: 2px solid var(--MainPolyGrey);
-}
-.rightSide{
-  width: 100%;
-  height: 95%;
-  border: 2px solid var(--MainPolyGrey);
+  overflow: hidden;
 }
 
-.titleBox{
+
+.header {
   background: linear-gradient(-135deg, var(--MainPolyPurple), var(--MainPolyCyberBlue));
-
+  width: 100%;
+  padding: 1.5% 0;
+  text-align: center;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
+
 .titleText {
   font-family: var(--font-family);
-  font-size: 15vw;
+  font-size: 24px;
   font-weight: bold;
-  text-align: center;
-
   color: white;
   text-transform: uppercase;
   letter-spacing: 2px;
+  margin: 0;
 }
-.originDestinationBox{
-  display: flex;
-  object-fit: contain;
-  height: 20%;
-  width: 100%;
-  background: var(--mainPolyDarkGrey);
 
+.map-container {
+  flex: 1;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
 }
-.graphics{
-  width: 10%;
+
+#map {
+  width: 100%;
+  height: 100%;
+  touch-action: manipulation;
+}
+
+
+.bottom-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  box-shadow: 0 -2px 10px rgba(0,0,0,0.2);
+  transition: transform var(--transition-time);
+  z-index: 5;
+  border-radius: 15px 15px 0 0;
+  max-height: 80vh;
+  overflow-y: auto;
+  transform: translateY(0);
+  background-color: var(--MainPolyDarkGrey);
+}
+
+.panel-collapsed {
+  transform: translateY(calc(100% - 50px));
+}
+
+.panel-handle {
+  width: 50px;
+  height: 5px;
+  background-color: #ccc;
+  border-radius: 10px;
+  margin: 1.25% auto;
+  cursor: pointer;
+}
+
+.tab-container {
   display: flex;
-  flex-direction: column;
+  border-bottom: 1px solid #444;
 }
-.destinationBox{
-  width: 90%;
+
+.tab {
+  flex: 1;
+  text-align: center;
+  padding: 1.5%;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ccc;
+}
+
+.tab.active {
+  color: white;
+  border-bottom: 2px solid var(--MainPolyCyberBlue);
+}
+
+.tab-content {
+  display: none;
+  padding: 1.9%;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+.destinationInput {
+  margin-bottom: 1.9%;
+}
+
+.titleBoxBot {
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 1%;
 }
-.desInput {
-  width: 85%;
-  padding: 5%;
-  font-size: 1vw;
-  border: 2px solid transparent;
+
+.filterTitle {
+  font-family: var(--font-family);
+  font-weight: bold;
+  color: white;
+  margin-bottom: 0.625%;
+}
+
+.selectBox {
+  width: 100%;
+  padding: 1.25%;
+  margin-bottom: 1.25%;
+  background-color: rgba(255, 255, 255, 0.1);
+  font-family: var(--font-family);
+  color: white;
+  border: 1px solid var(--MainPolyGrey);
+  border-radius: 5px;
+}
+
+.routeButtonContainer {
+  display: flex;
+  gap: 1.25%;
+  margin-top: 2.5%;
+  margin-bottom: 1.9%;
+}
+
+.findRouteButton {
+  flex: 1;
+  padding: 1.5%;
+  background-color: var(--MainPolyPurple);
+  color: white;
+  border: none;
   border-radius: var(--BorderRadius);
-  outline: none;
-  background-color: lightgray;
-  margin: 1.9%;
+  cursor: pointer;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: var(--font-family);
 }
-.destinationInput{
+
+.findRouteButton:hover, .findRouteButton:active {
+  background-color: var(--MainPolyCyberBlue);
+}
+
+
+.tagFilter {
+  margin-bottom: 1.9%;
+}
+
+.tagFilterTitle {
+  font-family: var(--font-family);
+  font-weight: bold;
+  margin-bottom: 0.625%;
+  color: white;
+}
+
+.tagInput {
+  padding: 1.25%;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid var(--MainPolyGrey);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-family: var(--font-family);
+}
+
+.filterGroup {
+  margin-bottom: 1.25%;
+}
+
+.groupHeader {
+  font-family: var(--font-family);
+  font-weight: bold;
+  cursor: pointer;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 90%;
+  justify-content: space-between;
+  padding: 1.25%;
+  background-color: var(--MainPolyPurple);
+  color: white;
+  border-radius: 5px;
+}
+
+.groupHeader:hover {
+  background-color: var(--MainPolyCyberBlue);
+}
+
+.groupContent {
+  padding: 0.625% 0 0.625% 1.25%;
+}
+
+.nodeItem {
+  margin: 0.625% 0;
+  padding: 1%;
+  border-radius: 5px;
+  color: white;
+  font-family: var(--font-family);
+}
+
+.nodeItem:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.kindGroup {
+  margin-top: 0.625%;
+}
+
+.tagsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.625%;
+  margin-top: 0.625%;
+}
+
+.tag {
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.375% 1%;
+  border-radius: 10px;
+  font-size: 12px;
+  color: white;
+  font-family: var(--font-family);
+}
+
+.expandIcon {
+  transition: transform 0.3s;
+  font-size: 12px;
+}
+
+.rotated {
+  transform: rotate(90deg);
+}
+
+
+@media (max-height: 600px) {
+  .bottom-panel {
+    max-height: 90vh;
+  }
+}
+
+@media (min-width: 768px) {
+  .titleText {
+    font-size: 28px;
+  }
 }

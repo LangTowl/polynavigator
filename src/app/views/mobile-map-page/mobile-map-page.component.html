@@ -1,25 +1,117 @@
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <title>PolyNav</title>
+  <meta charset="UTF-8" />
+  <title>Polynav Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 </head>
+
 <body>
 
+<div class="header">
+  <span class="titleText">Polynav</span>
+</div>
 
-  <div class = "titleBox">
-    <span class="titleText">Polynav</span>
-  </div>
-
-<div class="rightSide">
-  <svg #map id="map" width="100%" height="100%" viewBox="250 0 850 1147">
+<div class="map-container">
+  <svg #map id="map" width="100%" height="100%" viewBox="0 0 1300 1147">
     <image href="map-2.svg" width="1300" height="1147"/>
 
-    <path *ngFor="let path of paths" [attr.d]="path.d" stroke="red" stroke-width="3" fill="none"></path>
+    <image href="person.fill.svg"
+           [attr.x]="currentLong + bufferX"
+           [attr.y]="currentLat + bufferY"
+           width="20"
+           height="20"
+           [attr.style]="'color: var(--MainPolyCyberBlue)'"
+    />
 
-    <circle *ngFor="let node of nodes"  [attr.cx]="node.x + bufferX"  [attr.cy]="node.y + bufferY"  r="2" fill="blue"></circle>
+    <path *ngFor="let path of paths"
+          [attr.d]="path.d"
+          stroke='var(--MainPolyCyberBlue)'
+          stroke-width="5"></path>
+
+    <ng-container *ngFor="let key of nodeKeys">
+      <circle
+        *ngIf="!nodeDictionary[key].is_path"
+        [attr.cx]="nodeDictionary[key].x + bufferX"
+        [attr.cy]="nodeDictionary[key].y + bufferY"
+        [attr.r]="(selectedName1 === '' && selectedName2 === '' ) ? 4.5 : 8"
+        [attr.fill]="
+              (selectedName1 === '' && selectedName2 === '') ? 'var(--MainPolyDarkGrey)' :
+              (nodeDictionary[key].name === selectedName1) ? 'var(--MainPolyPurple)' :
+              (nodeDictionary[key].name === selectedName2) ? 'var(--MainPolyPurple)' : 'transparent'
+            ">
+      </circle>
+    </ng-container>
   </svg>
 </div>
 
+<div class="bottom-panel" [class.panel-collapsed]="isPanelCollapsed" id="bottomPanel">
+  <div class="panel-handle" id="panelHandle" (touchstart)="onPanelHandleTouch($event)"></div>
+
+  <div class="tab-container">
+    <div class="tab" [class.active]="activeTab === 'route'" (click)="setActiveTab('route')">Route</div>
+    <div class="tab" [class.active]="activeTab === 'filter'" (click)="setActiveTab('filter')">Filter</div>
+  </div>
+
+
+  <div class="tab-content" [class.active]="activeTab === 'route'">
+    <div class="destinationInput">
+      <div class="titleBoxBot">
+        <span class="filterTitle">From</span>
+      </div>
+      <select class="selectBox" [(ngModel)]="selectedGroup1">
+        <option *ngFor="let group of groupOptions" [value]="group">{{ group }}</option>
+      </select>
+      <select class="selectBox" [(ngModel)]="selectedName1" *ngIf="selectedGroup1">
+        <option *ngFor="let name of groupedNames[selectedGroup1]" [value]="name">{{ name }}</option>
+      </select>
+    </div>
+
+    <div class="destinationInput">
+      <div class="titleBoxBot">
+        <span class="filterTitle">To</span>
+      </div>
+      <select class="selectBox" [(ngModel)]="selectedGroup2">
+        <option *ngFor="let group of groupOptions" [value]="group">{{ group }}</option>
+      </select>
+      <select class="selectBox" [(ngModel)]="selectedName2" *ngIf="selectedGroup2">
+        <option *ngFor="let name of groupedNames[selectedGroup2]" [value]="name">{{ name }}</option>
+      </select>
+    </div>
+
+    <div class="routeButtonContainer">
+      <button class="findRouteButton" (click)="generatePaths()">Find Route</button>
+      <button class="findRouteButton" (click)="clear()">Clear</button>
+    </div>
+  </div>
+
+  <div class="tab-content" [class.active]="activeTab === 'filter'">
+    <div class="filterTitle">Filter Nodes</div>
+
+    <div class="tagFilter">
+      <div class="tagFilterTitle">Search by Tag:</div>
+      <input type="text" class="tagInput" [(ngModel)]="tagFilter" (input)="filterByTag()" placeholder="Enter tag to filter" />
+    </div>
+
+    <div *ngFor="let tagGroup of filteredTagGroups" class="filterGroup">
+      <div class="groupHeader" (click)="toggleGroup(tagGroup)">
+        <span>{{ tagGroup }}</span>
+        <span class="expandIcon" [class.rotated]="expandedGroups[tagGroup]">▶</span>
+      </div>
+
+      <div class="groupContent" [style.display]="expandedGroups[tagGroup] ? 'block' : 'none'">
+        <div *ngFor="let nodeName of getNodesByTag(tagGroup)" class="nodeItem" (click)="selectNodeByName(nodeName)">
+          <span>{{getGroupByNode(nodeName)}}</span>
+          <div class="kindGroup" *ngIf="getNodeKinds(nodeName).length > 0">
+            <div class="tagsList">
+              <span *ngFor="let tag of getNodeTags(nodeName)" class="tag">{{ tag }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 </body>
+
 </html>

@@ -9,7 +9,7 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+
 }
 
 :host {
@@ -19,12 +19,14 @@
   --MainPolyDarkGrey: #586066;
   --MainPolyCyberBlue: #009FDF;
   --BorderRadius: 20px;
+  background-color: var(--MainPolyGrey);
 }
 
 html {
-  height: 100vh;
-  width: 100vw;
-  background-color: var(--MainPolyGrey);
+  height: 100%;
+  width: 100%;
+  inset: 0;
+  background: var(--MainPolyGrey);
 }
 body{
   height: 100vh;
@@ -33,6 +35,16 @@ body{
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+}
+html, body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  position: fixed;
+  inset: 0;
+  background: var(--MainPolyGrey);
+  width: 100%;
+  height: 100%;
 }
 
 .titleText {

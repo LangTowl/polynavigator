@@ -3,7 +3,6 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 :host {
@@ -13,6 +12,7 @@
     --MainPolyDarkGrey: #586066;
     --MainPolyCyberBlue: #009FDF;
     --BorderRadius: 20px;
+    background-color: var(--MainPolyGrey);
 }
 
 html {
@@ -20,13 +20,25 @@ html {
   width: 100vw;
   background-color: var(--MainPolyGrey);
 }
+html, body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  position: fixed;
+  inset: 0;
+  background-color: var(--MainPolyGrey);
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-family);
+}
 body{
   height: 100vh;
   width: 100vw;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  inset: 0;
+  position: fixed;
 }
 
 .titleText {
@@ -102,6 +114,7 @@ body{
 }
 
 .mid{
+  inset: 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
